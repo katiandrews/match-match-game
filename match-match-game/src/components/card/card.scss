@@ -1,0 +1,53 @@
+.card-container {
+  margin: 1%;
+  flex: 1 0 20%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  perspective: 25rem;
+  cursor: pointer;
+
+  &:hover > .card {
+    transform: translateZ(2rem);
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, 0.5);
+  }
+
+  &.flipped > .card {
+    transform: rotateY(180deg) translateX(-100%);
+    transform-origin: left;
+  }
+}
+
+.card {
+  position: relative;
+  width: 10rem;
+  height: 12rem;
+  transform-style: preserve-3d;
+  transform-origin: right;
+  transition: all 500ms;
+  border-radius: .5rem;
+  box-shadow: 0 .1rem .25rem black;
+
+  &__front,
+  &__back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    background-position: center;
+    background-size: cover;
+    border-radius: inherit;
+  }
+
+  &__front {
+    background-color: crimson;
+  }
+
+  &__back {
+    background-color: gray;
+    background-image: url('../../assets/card-back.png');
+    transform: rotateY(180deg);
+  }
+}

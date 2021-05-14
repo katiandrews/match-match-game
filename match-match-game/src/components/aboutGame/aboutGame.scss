@@ -1,0 +1,58 @@
+.about-game {
+  width: 69%;
+  background-color: rgb(238, 238, 238);
+  margin: 33px auto;
+  padding: 28px 184px 85px 36px;
+}
+
+.section-title {
+  margin: 0;
+  margin-bottom: 20px;
+  font-weight: medium;
+  font-size: 20px;
+  line-height: 30px;
+  letter-spacing: 0.15px;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.step-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.step-list_item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.step-list_description {
+  display: flex;
+  width: 46%;
+  padding: 16px;
+  background-color: #fff;
+}
+
+.step-number {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin-right: 16px;
+  background-color: #2196f3;
+  font-size: 24px;
+  line-height: 40px;
+  letter-spacing: 0.25px;
+  color: #ffffff;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.step-list_text {
+  margin: 0;
+  margin-top: 8px;
+  width: 75.5%;
+  color: rgba(0, 0, 0, 0.6);
+}

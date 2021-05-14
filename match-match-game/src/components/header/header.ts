@@ -5,7 +5,7 @@ import { RegistrationForm } from '../registrationForm/registrationForm';
 import { Application } from '../../application';
 
 export class Header extends BaseComponent {
-  private button: Button;
+  button: Button;
 
   constructor() {
     super('header', ['main-header']);

@@ -1,13 +1,14 @@
 .registration-form {
   display: grid;
+  padding: 24px 32px;
   grid-template-columns: 328px 233px;
-  grid-template-rows: 67px 200px 101px;
+  grid-template-rows: 40px 200px 60px;
   grid-template-areas:
     "title title"
     "inputs avatar"
     "buttons buttons";
   background-color: #fff;
-  row-gap: 33px;
+  row-gap: 24px;
   column-gap: 38px;
 }
 
@@ -19,11 +20,44 @@
   grid-area: avatar;
 }
 
-.input-label {
+.inputs-wrapper {
   grid-area: inputs;
+  justify-content: center;
+  display: flex;
+  gap: 12px;
+  flex-direction: column;
+}
+
+.input-label {
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+  color: rgb(131, 131, 131);
+  font-size: 12px;
+}
+
+.text-input {
+  box-sizing: border-box;
+  border: none;
+  height: 32px;
+  border-bottom: 1px solid rgb(163, 163, 163);
+  background-color: rgb(228, 228, 228);
+}
+
+.text-input:focus-visible {
+  outline: none;
+  border-bottom: 2px solid #2196f3;
+}
+
+.buttons-wrapper {
+  grid-area: buttons;
+  display: flex;
+  gap: 12px;
+  flex-direction: row;
+  justify-self: end;
 }
 
 .form-button {
-  grid-area: buttons;
-  justify-content: end;
+  align-self: flex-end;
+  justify-self: end;
 }

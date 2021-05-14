@@ -1,21 +1,14 @@
 .about-game {
+  box-sizing: border-box;
   width: 69%;
+  height: 80vh;
   background-color: rgb(238, 238, 238);
   margin: 33px auto;
   padding: 28px 184px 85px 36px;
 }
 
-.section-title {
-  margin: 0;
-  margin-bottom: 20px;
-  font-weight: medium;
-  font-size: 20px;
-  line-height: 30px;
-  letter-spacing: 0.15px;
-  color: rgba(0, 0, 0, 0.87);
-}
-
 .step-list {
+  height: 100%;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -27,11 +20,18 @@
 .step-list_item {
   display: flex;
   justify-content: space-between;
+  height: 40%;
+}
+
+.step-list_item:nth-child(2) {
+  height: 20%;
 }
 
 .step-list_description {
+  box-sizing: border-box;
   display: flex;
   width: 46%;
+  height: 100%;
   padding: 16px;
   background-color: #fff;
 }

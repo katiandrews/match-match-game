@@ -1,6 +1,8 @@
 import './header.scss';
 import { BaseComponent } from "../baseComponent";
 import { Button } from '../button/button';
+import { RegistrationForm } from '../registrationForm/registrationForm';
+import { Application } from '../../application';
 
 export class Header extends BaseComponent {
   private button: Button;
@@ -23,7 +25,7 @@ export class Header extends BaseComponent {
         </ul>
       </nav>
     `
-    this.button = new Button('button', ['button_primary'], 'Register new player');
+    this.button = new Button('button', ['button_secondary'], 'Register new player');
     this.element.appendChild(this.button.element);
   }
 }

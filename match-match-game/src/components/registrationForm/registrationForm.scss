@@ -1,0 +1,29 @@
+.registration-form {
+  display: grid;
+  grid-template-columns: 328px 233px;
+  grid-template-rows: 67px 200px 101px;
+  grid-template-areas:
+    "title title"
+    "inputs avatar"
+    "buttons buttons";
+  background-color: #fff;
+  row-gap: 33px;
+  column-gap: 38px;
+}
+
+.registration-form-title {
+  grid-area: title;
+}
+
+.form_user-avatar {
+  grid-area: avatar;
+}
+
+.input-label {
+  grid-area: inputs;
+}
+
+.form-button {
+  grid-area: buttons;
+  justify-content: end;
+}

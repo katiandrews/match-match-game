@@ -1,6 +1,9 @@
 import './styles.scss';
 import { Application } from './application';
+export let app: Application = new Application(document.body);
 
 window.onload = () => {
-  new Application(document.body).init();
-}
+  if (window.location.hash === '') {
+    app.init();
+  }
+};

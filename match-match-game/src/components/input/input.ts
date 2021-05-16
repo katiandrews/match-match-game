@@ -1,10 +1,18 @@
-import { BaseComponent } from "../baseComponent";
+import { BaseComponent } from '../baseComponent';
 
 export class Input extends BaseComponent {
   input: HTMLElement;
 
-  constructor(tag: keyof HTMLElementTagNameMap = 'label', styles: string[] = [], text: string,
-              type: string, placeholder: string, pattern: string, required: boolean, maxLength: number = 30) {
+  constructor(
+    tag: keyof HTMLElementTagNameMap = 'label',
+    styles: string[] = [],
+    text: string,
+    type: string,
+    placeholder: string,
+    pattern: string,
+    required: boolean,
+    maxLength: number
+  ) {
     super(tag, styles);
     this.element.textContent = text;
     this.input = document.createElement('input');
@@ -18,7 +26,7 @@ export class Input extends BaseComponent {
     this.element.appendChild(this.input);
   }
 
-  clear() {
+  clear(): void {
     (<HTMLInputElement>this.input).value = '';
   }
 }

@@ -1,6 +1,6 @@
 import './modalBg.scss';
-import { BaseComponent } from "../baseComponent";
-import { RegistrationForm } from "../registrationForm/registrationForm";
+import { BaseComponent } from '../baseComponent';
+import { RegistrationForm } from '../registrationForm/registrationForm';
 
 export class ModalBg extends BaseComponent {
   registrationForm: RegistrationForm;
@@ -12,7 +12,7 @@ export class ModalBg extends BaseComponent {
     this.registrationForm.element.classList.add('visially-hidden');
   }
 
-  registration() {
+  registration(): void {
     this.registrationForm.element.classList.remove('.visually-hidden');
   }
 }

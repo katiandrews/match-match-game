@@ -1,13 +1,15 @@
-import { delay } from "../../shared/delay";
-import { BaseComponent } from "../baseComponent";
-import { Card } from "../card/card";
-import { CardsField } from "../cards-field/cards-field";
+import { delay } from '../../shared/delay';
+import { BaseComponent } from '../baseComponent';
+import { Card } from '../card/card';
+import { CardsField } from '../cards-field/cards-field';
 
 const FLIP_DELAY = 1000;
 
 export class Game extends BaseComponent {
   private readonly cardsField: CardsField;
+
   private activeCard?: Card;
+
   private isAnimation = false;
 
   constructor() {
@@ -16,16 +18,16 @@ export class Game extends BaseComponent {
     this.element.appendChild(this.cardsField.element);
   }
 
-  newGame(images: string[]) {
+  newGame(images: string[]): void {
     this.cardsField.clear();
 
     const cards = images
       .concat(images)
-      .map((url:string) => new Card(url))
-      .sort(() => Math.random() - .5);
+      .map((url: string) => new Card(url))
+      .sort(() => Math.random() - 0.5);
 
     cards.forEach((card) => {
-      card.element.addEventListener('click', () => this.cardHandler(card))
+      card.element.addEventListener('click', () => this.cardHandler(card));
     });
 
     this.cardsField.addCards(cards);
@@ -43,7 +45,7 @@ export class Game extends BaseComponent {
       return;
     }
 
-    if (this.activeCard.image != card.image) {
+    if (this.activeCard.image !== card.image) {
       await delay(FLIP_DELAY);
       await Promise.all([this.activeCard.flipBack(), card.flipBack()]);
     }

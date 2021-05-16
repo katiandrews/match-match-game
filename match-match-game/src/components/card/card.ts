@@ -1,12 +1,12 @@
-import './card.scss'
-import { BaseComponent } from "../baseComponent";
+import './card.scss';
+import { BaseComponent } from '../baseComponent';
 
 const FLIP_CLASS = 'flipped';
 
 export class Card extends BaseComponent {
   isFlipped = false;
 
-  constructor(readonly image:string) {
+  constructor(readonly image: string) {
     super('div', ['card-container']);
 
     this.element.innerHTML = `
@@ -14,15 +14,15 @@ export class Card extends BaseComponent {
         <div class="card__front" style="background-image: url('./images/${image}')">Front</div>
         <div class="card__back">Back</div>
       </div>
-    `
+    `;
   }
 
-  flipBack() {
+  flipBack(): Promise<void> {
     this.isFlipped = true;
     return this.flip(true);
   }
 
-  flipFront() {
+  flipFront(): Promise<void> {
     this.isFlipped = false;
     return this.flip(false);
   }
@@ -33,6 +33,6 @@ export class Card extends BaseComponent {
       this.element.addEventListener('transitionend', () => resolve(), {
         once: true,
       });
-    })
+    });
   }
 }

@@ -1,5 +1,5 @@
 import './aboutGame.scss';
-import { BaseComponent } from "../baseComponent";
+import { BaseComponent } from '../baseComponent';
 
 export class AboutGame extends BaseComponent {
   constructor() {
@@ -44,6 +44,6 @@ export class AboutGame extends BaseComponent {
           <img src="./game.jpg" alt="play" class="step-list_img" />
         </li>
       </ul>
-    `
+    `;
   }
 }

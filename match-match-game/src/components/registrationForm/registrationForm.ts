@@ -78,4 +78,11 @@ export class RegistrationForm extends BaseComponent {
     this.element.appendChild(this.inputContainer.element);
     this.element.appendChild(this.buttonsContainer.element);
   }
+
+  clearInputs(): void {
+    const inputs = this.element.querySelectorAll('input');
+    for (let i = 0; i < inputs.length; i += 1) {
+      inputs[i].value = '';
+    }
+  }
 }

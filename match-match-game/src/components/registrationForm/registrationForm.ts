@@ -2,6 +2,7 @@ import './registrationForm.scss';
 import { BaseComponent } from '../baseComponent';
 import { Button } from '../button/button';
 import { Input } from '../input/input';
+import avatarPlaceholder from '../../assets/avatar.png';
 
 export class RegistrationForm extends BaseComponent {
   private addButton: Button;
@@ -22,7 +23,7 @@ export class RegistrationForm extends BaseComponent {
     super('form', ['registration-form']);
     this.element.innerHTML = `
       <h1 class="section-title registration-form-title">How to play?</h1>
-      <img src="./avatar.png" alt="user avatar" class="form_user-avatar">
+      <img src="${avatarPlaceholder}" alt="user avatar" class="form_user-avatar">
     `;
     this.nameInput = new Input(
       'label',

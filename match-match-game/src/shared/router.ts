@@ -1,26 +1,11 @@
-import { app } from '../index';
+import { Application } from '../application';
 
-export const router: Function = (location: string) => {
-  window.location.hash = location;
-  switch (location) {
-    case '#/':
-      app.clear();
-      app.init();
-      break
-    case '#/settings':
-      app.clear();
-      app.openSettings();
-      break
-    case '#/score':
-      app.clear();
-      app.openScore();
-  }
-}
+export const app: Application = new Application(document.body);
 
-window.addEventListener('load', () => {
+window.addEventListener('hashchange', () => {
   const location = window.location.hash;
 
-  if(location) {
-    router(location);
+  if (location) {
+    app.router(location);
   }
-})
+});

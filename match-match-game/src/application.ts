@@ -10,51 +10,83 @@ import { Settings } from './components/settings/settings';
 export class Application {
   private header: Header;
 
+  private main: BaseComponent;
+
   private aboutGame: AboutGame;
+
+  private settings: Settings;
+
+  private score: Score;
 
   private readonly game: Game;
 
-  form: ModalBg;
-
-  main: BaseComponent;
+  private form: ModalBg;
 
   constructor(readonly rootElement: HTMLElement) {
     this.header = new Header();
     this.rootElement.appendChild(this.header.element);
     this.main = new BaseComponent('main', ['main']);
     this.rootElement.appendChild(this.main.element);
-    this.game = new Game();
     this.aboutGame = new AboutGame();
+    this.game = new Game();
+    this.settings = new Settings();
+    this.score = new Score();
     this.form = new ModalBg();
   }
 
   clear(): void {
-    this.header.element.querySelector('.nav-list_item__active')?.classList.remove('nav-list_item__active');
+    this.header.element
+      .querySelector('.nav-list_item__active')
+      ?.classList.remove('nav-list_item__active');
     this.main.element.innerHTML = '';
   }
 
+  router(location: string): void {
+    window.location.hash = location;
+    this.clear();
+    switch (location) {
+      case '#/':
+        this.init();
+        break;
+      case '#/settings':
+        this.openSettings();
+        break;
+      case '#/score':
+        this.openScore();
+        break;
+      default:
+        throw new Error(`there is no such route as ${location}!`);
+    }
+  }
+
   init(): void {
-    this.header.element.querySelector('.home')?.classList.add('nav-list_item__active');
+    this.header.element
+      .querySelector('li.home')
+      ?.classList.add('nav-list_item__active');
     this.main.element.appendChild(this.aboutGame.element);
     this.header.button.element.addEventListener('click', () => {
       this.main.element.appendChild(this.form.element);
       this.form.registration();
     });
-    this.form.element.addEventListener('mousedown', (event: Event) => {
-      if ((<HTMLElement>event.target).classList.contains('modal-background')) {
-        this.form.element.remove();
+
+    // listen for menu-items click;
+    this.header.element.addEventListener('click', (event) => {
+      event.preventDefault();
+      if ((<HTMLElement>event.target).classList.contains('home')) {
+        this.router('#/');
       }
-      if ((<HTMLElement>event.target).classList.contains('button_secondary')) {
-        event.preventDefault();
-        const inputs = this.form.element.querySelectorAll('input');
-        for (let i = 0; i < inputs.length; i += 1) {
-          inputs[i].value = '';
-        }
+
+      if ((<HTMLElement>event.target).classList.contains('score')) {
+        this.router('#/score');
+      }
+
+      if ((<HTMLElement>event.target).classList.contains('settings')) {
+        this.router('#/settings');
       }
     });
   }
 
-  async start(): Promise<void> {
+  async startGame(): Promise<void> {
     this.main.element.appendChild(this.game.element);
     const res = await fetch('./images.json');
     const categories: ImageCategoryModel[] = await res.json();
@@ -64,14 +96,16 @@ export class Application {
   }
 
   openSettings(): void {
-    this.clear();
-    this.header.element.querySelector('.settings')?.classList.add('nav-list_item__active');
-    new Settings();
+    this.header.element
+      .querySelector('.settings')
+      ?.classList.add('nav-list_item__active');
+    this.main.element.appendChild(this.settings.element);
   }
 
   openScore(): void {
-    this.clear();
-    new Score();
-    this.header.element.querySelector('.score')?.classList.add('nav-list_item__active');
+    this.header.element
+      .querySelector('.score')
+      ?.classList.add('nav-list_item__active');
+    this.main.element.appendChild(this.score.element);
   }
 }

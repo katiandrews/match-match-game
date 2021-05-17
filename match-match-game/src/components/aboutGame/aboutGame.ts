@@ -1,5 +1,8 @@
 import './aboutGame.scss';
 import { BaseComponent } from '../baseComponent';
+import registrationImg from '../../assets/registration.jpg';
+import settingsImg from '../../assets/settings.jpg';
+import gameImg from '../../assets/game.jpg';
 
 export class AboutGame extends BaseComponent {
   constructor() {
@@ -15,7 +18,7 @@ export class AboutGame extends BaseComponent {
             </p>
           </div>
           <img
-            src="./registration.jpg"
+            src="${registrationImg}"
             alt="register new player"
             class="step-list_img"
           />
@@ -28,7 +31,7 @@ export class AboutGame extends BaseComponent {
             </p>
           </div>
           <img
-            src="./settings.jpg"
+            src="${settingsImg}"
             alt="choose settings"
             class="step-list_img"
           />
@@ -41,7 +44,7 @@ export class AboutGame extends BaseComponent {
             times up.
             </p>
           </div>
-          <img src="./game.jpg" alt="play" class="step-list_img" />
+          <img src="${gameImg}" alt="play" class="step-list_img" />
         </li>
       </ul>
     `;

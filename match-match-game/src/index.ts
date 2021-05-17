@@ -1,9 +1,6 @@
 import './styles.scss';
-import { Application } from './application';
-export let app: Application = new Application(document.body);
+import { app } from './shared/router';
 
 window.onload = () => {
-  if (window.location.hash === '') {
-    app.init();
-  }
+  app.router('#/');
 };

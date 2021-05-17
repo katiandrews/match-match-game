@@ -14,5 +14,17 @@ export class ModalBg extends BaseComponent {
 
   registration(): void {
     this.registrationForm.element.classList.remove('.visually-hidden');
+    this.element.addEventListener('mousedown', (event: Event) => {
+      if ((<HTMLElement>event.target).classList.contains('modal-background')) {
+        this.element.remove();
+      }
+      if ((<HTMLElement>event.target).classList.contains('button_secondary')) {
+        event.preventDefault();
+        const inputs = this.element.querySelectorAll('input');
+        for (let i = 0; i < inputs.length; i += 1) {
+          inputs[i].value = '';
+        }
+      }
+    });
   }
 }

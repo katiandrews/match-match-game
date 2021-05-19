@@ -38,6 +38,7 @@ export class Header extends BaseComponent {
   }
 
   addUser(): void {
+    this.button.element.textContent = 'Start new game';
     this.element.appendChild(this.user.element);
     this.user.element.appendChild(this.userAvatar.element);
     (<HTMLImageElement>this.userAvatar.element).src = './public/image.jpg';

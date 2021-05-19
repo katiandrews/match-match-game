@@ -1,14 +1,16 @@
 export class Database {
-  public db: IDBDatabase | null = null;
+  public db: IDBDatabase | null;
 
-  constructor() {}
+  constructor() {
+    this.db = null;
+  }
 
-  init(dbName: string, version?: number) {
+  init(dbName: string, version?: number): void {
     const iDB = window.indexedDB;
     const openRequest = iDB.open(dbName, version);
     openRequest.onupgradeneeded = () => {
-      let database = openRequest.result;
-      let usersStore = database.createObjectStore('users', {
+      const database = openRequest.result;
+      const usersStore = database.createObjectStore('users', {
         keyPath: 'id',
         autoIncrement: true,
       });
@@ -26,11 +28,11 @@ export class Database {
     data1: string | number,
     data2: string | number,
     data3: string | number
-  ) {
+  ): void {
     if (this.db) {
-      let transaction = this.db.transaction('users', 'readwrite');
-      let usersStore = transaction.objectStore('users');
-      let result = usersStore.put({
+      const transaction = this.db.transaction('users', 'readwrite');
+      const usersStore = transaction.objectStore('users');
+      const result = usersStore.put({
         name: data1,
         surname: data2,
         email: data3,
@@ -47,11 +49,11 @@ export class Database {
     }
   }
 
-  readAll() {
+  readAll(): void {
     if (this.db) {
-      let transaction = this.db.transaction('users', 'readonly');
-      let usersStore = transaction.objectStore('users');
-      let result = usersStore.getAll();
+      const transaction = this.db.transaction('users', 'readonly');
+      const usersStore = transaction.objectStore('users');
+      const result = usersStore.getAll();
 
       transaction.oncomplete = () => {
         console.log(result.result);
@@ -59,14 +61,14 @@ export class Database {
     }
   }
 
-  readFilteredScore() {
+  readFilteredScore(): void {
     if (this.db) {
-      let transaction = this.db.transaction('users', 'readonly');
-      let usersStore = transaction.objectStore('users');
-      let result = usersStore.index('email').openCursor(null, 'prev');
-      let resData: Array<number> = [];
+      const transaction = this.db.transaction('users', 'readonly');
+      const usersStore = transaction.objectStore('users');
+      const result = usersStore.index('email').openCursor(null, 'prev');
+      const resData: Array<number> = [];
       result.onsuccess = () => {
-        let cursor = result.result;
+        const cursor = result.result;
         if (cursor) {
           console.log(cursor.value);
           resData.push(cursor.value);

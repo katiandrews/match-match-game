@@ -1,7 +1,6 @@
 import './modalBg.scss';
 import { BaseComponent } from '../baseComponent';
 import { RegistrationForm } from '../../components/registrationForm/registrationForm';
-import { Application } from '../../application';
 
 export class ModalBg extends BaseComponent {
   registrationForm: RegistrationForm;

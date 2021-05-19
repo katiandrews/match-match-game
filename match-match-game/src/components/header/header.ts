@@ -37,7 +37,7 @@ export class Header extends BaseComponent {
     this.userAvatar = new BaseComponent('img', ['user-info_avatar']);
   }
 
-  addUser() {
+  addUser(): void {
     this.element.appendChild(this.user.element);
     this.user.element.appendChild(this.userAvatar.element);
     (<HTMLImageElement>this.userAvatar.element).src = './public/image.jpg';

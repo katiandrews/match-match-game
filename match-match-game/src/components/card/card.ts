@@ -1,5 +1,5 @@
 import './card.scss';
-import { BaseComponent } from '../baseComponent';
+import { BaseComponent } from '../../shared/baseComponent';
 
 const FLIP_CLASS = 'flipped';
 

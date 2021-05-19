@@ -1,3 +1,4 @@
+import './shared/indexeddb';
 import './styles.scss';
 import { app } from './shared/router';
 

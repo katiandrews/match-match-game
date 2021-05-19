@@ -1,9 +1,13 @@
 import './header.scss';
-import { BaseComponent } from '../baseComponent';
-import { Button } from '../button/button';
+import { BaseComponent } from '../../shared/baseComponent';
+import { Button } from '../../shared/button/button';
 
 export class Header extends BaseComponent {
   button: Button;
+
+  user: BaseComponent;
+
+  userAvatar: BaseComponent;
 
   constructor() {
     super('header', ['main-header']);
@@ -29,5 +33,13 @@ export class Header extends BaseComponent {
       'Register new player'
     );
     this.element.appendChild(this.button.element);
+    this.user = new BaseComponent('div', ['header_user-info']);
+    this.userAvatar = new BaseComponent('img', ['user-info_avatar']);
+  }
+
+  addUser() {
+    this.element.appendChild(this.user.element);
+    this.user.element.appendChild(this.userAvatar.element);
+    (<HTMLImageElement>this.userAvatar.element).src = './public/image.jpg';
   }
 }

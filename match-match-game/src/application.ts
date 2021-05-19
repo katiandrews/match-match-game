@@ -1,11 +1,12 @@
 import { AboutGame } from './components/aboutGame/aboutGame';
-import { BaseComponent } from './components/baseComponent';
+import { BaseComponent } from './shared/baseComponent';
 import { Game } from './components/game/game';
 import { Header } from './components/header/header';
-import { ModalBg } from './components/modalBg/modalBg';
+import { ModalBg } from './shared/modalBg/modalBg';
 import { ImageCategoryModel } from './models/image-category-model';
 import { Score } from './components/score/score';
 import { Settings } from './components/settings/settings';
+import { Database } from './shared/indexeddb';
 
 export class Application {
   private header: Header;
@@ -22,6 +23,8 @@ export class Application {
 
   private form: ModalBg;
 
+  public usersData = new Database();
+
   constructor(readonly rootElement: HTMLElement) {
     this.header = new Header();
     this.rootElement.appendChild(this.header.element);
@@ -32,6 +35,11 @@ export class Application {
     this.settings = new Settings();
     this.score = new Score();
     this.form = new ModalBg();
+    this.usersData.init('katiandrews');
+    this.form.registrationForm.element.addEventListener('submit', (event) => {
+      event?.preventDefault();
+      this.registerUser();
+    });
   }
 
   clear(): void {
@@ -107,5 +115,14 @@ export class Application {
       .querySelector('.score')
       ?.classList.add('nav-list_item__active');
     this.main.element.appendChild(this.score.element);
+  }
+
+  registerUser(): void {
+    this.form.registrationForm.sendData(this.usersData);
+    this.form.close();
+    this.header.user.element.textContent =
+      this.form.registrationForm.returnInputValues();
+    this.header.button.element.textContent = 'start new game';
+    this.header.addUser();
   }
 }

@@ -1,5 +1,5 @@
 import './aboutGame.scss';
-import { BaseComponent } from '../baseComponent';
+import { BaseComponent } from '../../shared/baseComponent';
 import registrationImg from '../../assets/registration.jpg';
 import settingsImg from '../../assets/settings.jpg';
 import gameImg from '../../assets/game.jpg';

@@ -1,8 +1,9 @@
 import './registrationForm.scss';
-import { BaseComponent } from '../baseComponent';
-import { Button } from '../button/button';
+import { BaseComponent } from '../../shared/baseComponent';
+import { Button } from '../../shared/button/button';
 import { Input } from '../input/input';
 import avatarPlaceholder from '../../assets/avatar.png';
+import { Database } from '../../shared/indexeddb';
 
 export class RegistrationForm extends BaseComponent {
   private addButton: Button;
@@ -20,7 +21,7 @@ export class RegistrationForm extends BaseComponent {
   buttonsContainer: BaseComponent;
 
   constructor() {
-    super('form', ['registration-form']);
+    super('form', ['registration-form', 'visually-hidden']);
     this.element.innerHTML = `
       <h1 class="section-title registration-form-title">How to play?</h1>
       <img src="${avatarPlaceholder}" alt="user avatar" class="form_user-avatar">
@@ -31,7 +32,7 @@ export class RegistrationForm extends BaseComponent {
       'First Name',
       'text',
       'First Name',
-      "/^[a-z ,.'-]+$/i",
+      '^(?=.*[a-zA-Z])[A-Za-z0-9]{1,30}$',
       true,
       30
     );
@@ -41,7 +42,7 @@ export class RegistrationForm extends BaseComponent {
       'Last Name',
       'text',
       'Last Name',
-      "/^[a-z ,.'-]+$/i",
+      '^(?=.*[a-zA-Z])[A-Za-z0-9]{1,30}$',
       true,
       30
     );
@@ -51,19 +52,22 @@ export class RegistrationForm extends BaseComponent {
       'Email',
       'text',
       'Email',
-      "/^[a-z ,.'-]+$/i",
+      '^(?=.*[a-zA-Z])[A-Za-z0-9]{1,30}$',
       true,
       30
     );
     this.addButton = new Button(
       'button',
       ['button_primary', 'form-button'],
-      'add user'
+      'add user',
+      'submit'
     );
+    (<HTMLButtonElement>this.addButton.element).disabled = true;
     this.cancelButton = new Button(
       'button',
       ['button_secondary', 'form-button'],
-      'cancel'
+      'cancel',
+      'reset'
     );
 
     this.inputContainer = new BaseComponent('div', ['inputs-wrapper']);
@@ -77,12 +81,34 @@ export class RegistrationForm extends BaseComponent {
 
     this.element.appendChild(this.inputContainer.element);
     this.element.appendChild(this.buttonsContainer.element);
+
+    this.element.addEventListener('input', () => {
+      // check if form is valid on input event
+      this.validateForm();
+    });
   }
 
-  clearInputs(): void {
+  validateForm(): void {
+    (<HTMLFormElement>this.element).reportValidity(); // shows validity errors
     const inputs = this.element.querySelectorAll('input');
     for (let i = 0; i < inputs.length; i += 1) {
-      inputs[i].value = '';
+      if (inputs[i].validity.valid === false) {
+        (<HTMLButtonElement>this.addButton.element).disabled = true;
+        return;
+      }
     }
+    (<HTMLButtonElement>this.addButton.element).disabled = false;
+  }
+
+  sendData(store: Database): void {
+    // TODO: put user's data to indexedDB storage;
+    const userName = this.nameInput.input.value;
+    const userSurname = this.surnameInput.input.value;
+    const userEmail = this.emailInput.input.value;
+    store.write(userName, userSurname, userEmail);
+  }
+
+  returnInputValues(): string {
+    return `${this.nameInput.input.value} ${this.surnameInput.input.value}`;
   }
 }

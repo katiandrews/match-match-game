@@ -1,5 +1,5 @@
 import { delay } from '../../shared/delay';
-import { BaseComponent } from '../baseComponent';
+import { BaseComponent } from '../../shared/baseComponent';
 import { Card } from '../card/card';
 import { CardsField } from '../cards-field/cards-field';
 

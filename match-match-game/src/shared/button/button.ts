@@ -1,12 +1,15 @@
+import './button.scss';
 import { BaseComponent } from '../baseComponent';
 
 export class Button extends BaseComponent {
   constructor(
-    tag: keyof HTMLElementTagNameMap = 'div',
+    tag: keyof HTMLElementTagNameMap = 'button',
     styles: string[] = [],
-    text: string
+    text: string,
+    type = 'button'
   ) {
     super(tag, styles);
     (<HTMLButtonElement>this.element).textContent = text;
+    (<HTMLButtonElement>this.element).type = type;
   }
 }

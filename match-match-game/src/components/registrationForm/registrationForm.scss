@@ -28,26 +28,6 @@
   flex-direction: column;
 }
 
-.input-label {
-  display: flex;
-  gap: 8px;
-  flex-direction: column;
-  color: rgb(131, 131, 131);
-  font-size: 12px;
-}
-
-.text-input {
-  box-sizing: border-box;
-  border: none;
-  height: 32px;
-  border-bottom: 1px solid rgb(163, 163, 163);
-  background-color: rgb(228, 228, 228);
-}
-
-.text-input:focus-visible {
-  outline: none;
-  border-bottom: 2px solid #2196f3;
-}
 
 .buttons-wrapper {
   grid-area: buttons;

@@ -1,7 +1,8 @@
-import { BaseComponent } from '../baseComponent';
+import './input.scss';
+import { BaseComponent } from '../../shared/baseComponent';
 
 export class Input extends BaseComponent {
-  input: HTMLElement;
+  input: HTMLInputElement;
 
   constructor(
     tag: keyof HTMLElementTagNameMap = 'label',
@@ -17,16 +18,11 @@ export class Input extends BaseComponent {
     this.element.textContent = text;
     this.input = document.createElement('input');
     this.input.classList.add('text-input');
-    (<HTMLInputElement>this.input).type = type;
-    (<HTMLInputElement>this.input).placeholder = placeholder;
-    (<HTMLInputElement>this.input).pattern = pattern;
-    (<HTMLInputElement>this.input).required = required;
-    (<HTMLInputElement>this.input).required = required;
-    (<HTMLInputElement>this.input).maxLength = maxLength;
+    this.input.type = type;
+    this.input.placeholder = placeholder;
+    this.input.pattern = pattern;
+    this.input.required = required;
+    this.input.maxLength = maxLength;
     this.element.appendChild(this.input);
-  }
-
-  clear(): void {
-    (<HTMLInputElement>this.input).value = '';
   }
 }

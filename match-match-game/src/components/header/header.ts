@@ -1,11 +1,10 @@
 import './header.scss';
 import { BaseComponent } from '../../shared/baseComponent';
 import { Button } from '../../shared/button/button';
+import avatar from '../../assets/settings.jpg';
 
 export class Header extends BaseComponent {
   button: Button;
-
-  user: BaseComponent;
 
   userAvatar: BaseComponent;
 
@@ -33,14 +32,12 @@ export class Header extends BaseComponent {
       'Register new player'
     );
     this.element.appendChild(this.button.element);
-    this.user = new BaseComponent('div', ['header_user-info']);
-    this.userAvatar = new BaseComponent('img', ['user-info_avatar']);
+    this.userAvatar = new BaseComponent('img', ['user-avatar']);
   }
 
   addUser(): void {
-    this.button.element.textContent = 'Start new game';
-    this.element.appendChild(this.user.element);
-    this.user.element.appendChild(this.userAvatar.element);
-    (<HTMLImageElement>this.userAvatar.element).src = './public/image.jpg';
+    this.button.element.textContent = 'Start game';
+    this.element.appendChild(this.userAvatar.element);
+    (<HTMLImageElement>this.userAvatar.element).src = avatar;
   }
 }

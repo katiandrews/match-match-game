@@ -2,7 +2,6 @@
   padding: 0 24px;
   background-color: #2196f3;
   display: flex;
-  justify-content: space-between;
   align-items: center;
 }
 
@@ -16,6 +15,7 @@
 
 .header-nav {
   width: 56%;
+  margin-left: 10%;
 }
 
 .nav-list {
@@ -75,4 +75,14 @@
   height: 20px;
   background-image: url("../../assets/icons/settings.svg");
   background-position: center;
+}
+
+.button_secondary {
+  margin-left: auto;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  margin-left: 30px;
 }

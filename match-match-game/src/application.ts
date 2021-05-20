@@ -63,7 +63,7 @@ export class Application {
       if (this.header.button.element.textContent === 'Register new player') {
         this.main.element.appendChild(this.form.element);
         this.form.registration();
-      } else if (this.header.button.element.textContent === 'Start new game') {
+      } else if (this.header.button.element.textContent === 'Start game') {
         window.location.hash = '#/game';
         this.header.button.element.textContent = 'Stop game';
       } else if (this.header.button.element.textContent === 'Stop game') {
@@ -95,9 +95,7 @@ export class Application {
   }
 
   stopGame(): void {
-    if (this.header.button.element.textContent === 'Stop game') {
-      this.header.button.element.textContent = 'Start new game';
-    }
+    this.header.button.element.textContent = 'Start game';
   }
 
   openSettings(): void {
@@ -117,8 +115,6 @@ export class Application {
   registerUser(): void {
     this.form.registrationForm.sendData(this.usersData);
     this.form.close();
-    this.header.user.element.textContent =
-      this.form.registrationForm.returnInputValues();
     this.header.addUser();
   }
 }

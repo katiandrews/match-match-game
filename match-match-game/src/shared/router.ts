@@ -2,7 +2,7 @@ import { Application } from '../application';
 
 export const app: Application = new Application(document.body);
 
-let router = function (location: string) {
+const router = (location: string) => {
   app.header.element
     .querySelector('.nav-list_item__active')
     ?.classList.remove('nav-list_item__active');
@@ -22,6 +22,7 @@ let router = function (location: string) {
       break;
     case '#/game':
       app.startGame();
+      break;
     default:
       throw new Error(`there is no such route as ${location}!`);
   }

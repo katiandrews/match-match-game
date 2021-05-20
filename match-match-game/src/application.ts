@@ -78,6 +78,7 @@ export class Application {
   }
 
   init(): void {
+    window.location.hash = '#/';
     this.header.element
       .querySelector('li.home')
       ?.classList.add('nav-list_item__active');
@@ -90,12 +91,16 @@ export class Application {
     const res = await fetch('./images.json');
     const categories: ImageCategoryModel[] = await res.json();
     const cat = categories[0];
-    const images = cat.images.map((name) => `${cat.category}/${name}`);
+    const images = cat.images
+      .slice(0, this.settings.difficulty)
+      .map((name) => `${cat.category}/${name}`);
     this.game.newGame(images);
   }
 
   stopGame(): void {
-    this.header.button.element.textContent = 'Start game';
+    if (this.header.button.element.textContent === 'Stop game') {
+      this.header.button.element.textContent = 'Start game';
+    }
   }
 
   openSettings(): void {

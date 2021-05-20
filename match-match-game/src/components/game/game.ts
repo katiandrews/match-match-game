@@ -20,7 +20,6 @@ export class Game extends BaseComponent {
 
   newGame(images: string[]): void {
     this.cardsField.clear();
-
     const cards = images
       .concat(images)
       .map((url: string) => new Card(url))

@@ -9,7 +9,7 @@ import { Settings } from './components/settings/settings';
 import { Database } from './shared/indexeddb';
 
 export class Application {
-  private header: Header;
+  public header: Header;
 
   private main: BaseComponent;
 
@@ -42,19 +42,19 @@ export class Application {
       event?.preventDefault();
       this.registerUser();
     });
-    // listen for menu-items click;
+
     this.header.element.addEventListener('click', (event) => {
       event.preventDefault();
       if ((<HTMLElement>event.target).classList.contains('home')) {
-        this.router('#/');
+        window.location.hash = '#/';
       }
 
       if ((<HTMLElement>event.target).classList.contains('score')) {
-        this.router('#/score');
+        window.location.hash = '#/score';
       }
 
       if ((<HTMLElement>event.target).classList.contains('settings')) {
-        this.router('#/settings');
+        window.location.hash = '#/settings';
       }
     });
 
@@ -64,10 +64,10 @@ export class Application {
         this.main.element.appendChild(this.form.element);
         this.form.registration();
       } else if (this.header.button.element.textContent === 'Start new game') {
-        this.startGame();
+        window.location.hash = '#/game';
         this.header.button.element.textContent = 'Stop game';
       } else if (this.header.button.element.textContent === 'Stop game') {
-        this.router('#/');
+        window.location.hash = '#/';
         this.stopGame();
       }
     });
@@ -75,30 +75,6 @@ export class Application {
 
   clear(): void {
     this.main.element.innerHTML = '';
-  }
-
-  router(location: string): void {
-    window.location.hash = location;
-    this.header.element
-      .querySelector('.nav-list_item__active')
-      ?.classList.remove('nav-list_item__active');
-    this.clear();
-    switch (location) {
-      case '#/':
-        this.stopGame();
-        this.init();
-        break;
-      case '#/settings':
-        this.stopGame();
-        this.openSettings();
-        break;
-      case '#/score':
-        this.stopGame();
-        this.openScore();
-        break;
-      default:
-        throw new Error(`there is no such route as ${location}!`);
-    }
   }
 
   init(): void {

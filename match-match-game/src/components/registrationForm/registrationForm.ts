@@ -101,7 +101,7 @@ export class RegistrationForm extends BaseComponent {
   }
 
   sendData(store: Database): void {
-    // TODO: put user's data to indexedDB storage;
+    // put user's data to indexedDB storage;
     const userName = this.nameInput.input.value;
     const userSurname = this.surnameInput.input.value;
     const userEmail = this.emailInput.input.value;

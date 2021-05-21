@@ -11,10 +11,10 @@ export class Settings extends BaseComponent {
     this.element.innerHTML = `
      <h2 class="section-title">Game cards</h2>
      <select name="category" class="settings_category">
-      <option value="unsorted">Select game cards type</option>
+      <option value="memes">Select game cards type</option>
       <option value="memes">Memes</option>
-      <option value="animals">Animals</option>
-      <option value="pokemon">Pokemons</option>
+      <option value="cities">Cities</option>
+      <option value="pokemons">Pokemons</option>
       </select>
      <h2 class="section-title">Difficulty</h2>
      <select name="difficulty" class="settings_difficulty">
@@ -23,9 +23,7 @@ export class Settings extends BaseComponent {
       <option value="6x6">6x6</option>
       </select>
     `;
-
     const categorySelect = this.element.querySelector('.settings_category');
-
     categorySelect?.addEventListener('change', () => {
       this.category = (<HTMLSelectElement>categorySelect).value;
     });

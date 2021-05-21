@@ -89,12 +89,14 @@ export class Application {
     this.clear();
     this.main.element.appendChild(this.game.element);
     const res = await fetch('./images.json');
-    const categories: ImageCategoryModel[] = await res.json();
-    const cat = categories[0];
-    const images = cat.images
-      .slice(0, this.settings.difficulty)
-      .map((name) => `${cat.category}/${name}`);
-    this.game.newGame(images);
+    const categories = await res.json();
+    let category = this.settings.category;
+    const images = categories[category]
+      ?.slice(0, this.settings.difficulty)
+      .map((name: string) => `${category}/${name}`);
+    if (images) {
+      this.game.newGame(images);
+    }
   }
 
   stopGame(): void {

@@ -1,10 +1,10 @@
 .cards-field {
-  width: 70%;
-  height: 100vh;
+  width: fit-content;
+  min-height: 90vh;
   margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(50px, 120px));
+  grid-template-rows: repeat(4, minmax(150px, auto));
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(50px, 120px);
 }

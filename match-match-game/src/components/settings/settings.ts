@@ -4,7 +4,7 @@ import { BaseComponent } from '../../shared/baseComponent';
 export class Settings extends BaseComponent {
   public difficulty = 8;
 
-  public category = 'unsorted';
+  public category = 'memes';
 
   constructor() {
     super('section', ['game-settings']);

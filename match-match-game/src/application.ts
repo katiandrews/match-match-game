@@ -3,7 +3,6 @@ import { BaseComponent } from './shared/baseComponent';
 import { Game } from './components/game/game';
 import { Header } from './components/header/header';
 import { ModalBg } from './shared/modalBg/modalBg';
-import { ImageCategoryModel } from './models/image-category-model';
 import { Score } from './components/score/score';
 import { Settings } from './components/settings/settings';
 import { Database } from './shared/indexeddb';
@@ -90,6 +89,7 @@ export class Application {
     this.main.element.appendChild(this.game.element);
     const res = await fetch('./images.json');
     const categories = await res.json();
+    console.log(categories);
     let category = this.settings.category;
     const images = categories[category]
       ?.slice(0, this.settings.difficulty)

@@ -35,7 +35,6 @@ export class Application {
     this.score = new Score();
     this.form = new ModalBg();
     this.usersData.init('katiandrews');
-
     // listen for registrationForm submit
     this.form.registrationForm.element.addEventListener('submit', (event) => {
       event?.preventDefault();
@@ -89,14 +88,17 @@ export class Application {
     this.main.element.appendChild(this.game.element);
     const res = await fetch('./images.json');
     const categories = await res.json();
-    console.log(categories);
     let category = this.settings.category;
     const images = categories[category]
       ?.slice(0, this.settings.difficulty)
       .map((name: string) => `${category}/${name}`);
     if (images) {
-      this.game.newGame(images);
+      this.game.newGame(images, this.settings.difficulty);
     }
+    const openScoreButton = this.game.winningModal.okButton.element;
+    openScoreButton?.addEventListener('click', () => {
+      window.location.hash = '#/score';
+    });
   }
 
   stopGame(): void {

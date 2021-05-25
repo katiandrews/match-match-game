@@ -11,8 +11,8 @@ export class Card extends BaseComponent {
 
     this.element.innerHTML = `
       <div class="card">
-        <div class="card__front" style="background-image: url('./images/${image}')">Front</div>
-        <div class="card__back">Back</div>
+        <div class="card__front" style="background-image: url('./images/${image}')"></div>
+        <div class="card__back"></div>
       </div>
     `;
   }
@@ -34,5 +34,10 @@ export class Card extends BaseComponent {
         once: true,
       });
     });
+  }
+
+  paintBg(color: string) {
+    const cardFront = this.element.querySelector('.card__front');
+    cardFront?.classList.toggle(color);
   }
 }

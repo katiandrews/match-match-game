@@ -50,3 +50,11 @@
     transform: rotateY(180deg);
   }
 }
+
+.red {
+  filter: sepia(100%) hue-rotate(310deg) saturate(350%) brightness(0.8);
+}
+
+.green {
+  filter: sepia(100%) hue-rotate(90deg) saturate(300%) brightness(0.8);
+}

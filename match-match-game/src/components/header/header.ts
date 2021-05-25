@@ -40,4 +40,10 @@ export class Header extends BaseComponent {
     this.element.appendChild(this.userAvatar.element);
     (<HTMLImageElement>this.userAvatar.element).src = avatar;
   }
+
+  changeStartStopButton(): void {
+    if (this.button.element.textContent === 'Stop game') {
+      this.button.element.textContent = 'Start game';
+    }
+  }
 }

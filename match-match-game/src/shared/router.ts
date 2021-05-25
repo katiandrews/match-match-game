@@ -9,15 +9,18 @@ const router = (location: string) => {
   app.clear();
   switch (location) {
     case '#/':
-      app.stopGame();
+      app.header.changeStartStopButton();
+      app.game.stopGame();
       app.init();
       break;
     case '#/settings':
-      app.stopGame();
+      app.header.changeStartStopButton();
+      app.game.stopGame();
       app.openSettings();
       break;
     case '#/score':
-      app.stopGame();
+      app.header.changeStartStopButton();
+      app.game.stopGame();
       app.openScore();
       break;
     case '#/game':

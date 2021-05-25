@@ -10,7 +10,7 @@ export class ModalBg extends BaseComponent {
   constructor() {
     super('div', ['modal-background']);
     this.registrationForm = new RegistrationForm();
-    this.okButton = new Button('button', ['congrats-modal-button'], 'OK');
+    this.okButton = new Button('button', ['button_primary', 'congrats-modal-button'], 'OK');
     this.element.addEventListener('mousedown', (event: Event) => {
       if ((<HTMLElement>event.target).classList.contains('modal-background')) {
         this.close();
@@ -25,7 +25,7 @@ export class ModalBg extends BaseComponent {
 
   winningAlert(): void {
     const congratsModal = new BaseComponent('div', ['congrats-modal']);
-    congratsModal.element.textContent = 'Congratulation! You found all pairs.';
+    congratsModal.element.textContent = 'Congratulations! You found all matches.';
     congratsModal.element.appendChild(this.okButton.element);
     this.element.appendChild(congratsModal.element);
   }

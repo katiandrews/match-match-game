@@ -8,3 +8,12 @@
   justify-content: center;
   align-items: center;
 }
+
+.congrats-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 24px;
+  background-color: white;
+  gap: 16px;
+}

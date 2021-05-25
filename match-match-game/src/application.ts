@@ -18,7 +18,7 @@ export class Application {
 
   private score: Score;
 
-  private readonly game: Game;
+  readonly game: Game;
 
   private form: ModalBg;
 
@@ -66,7 +66,8 @@ export class Application {
         this.header.button.element.textContent = 'Stop game';
       } else if (this.header.button.element.textContent === 'Stop game') {
         window.location.hash = '#/';
-        this.stopGame();
+        this.header.button.element.textContent = 'Start game';
+        this.game.stopGame();
       }
     });
   }
@@ -99,12 +100,6 @@ export class Application {
     openScoreButton?.addEventListener('click', () => {
       window.location.hash = '#/score';
     });
-  }
-
-  stopGame(): void {
-    if (this.header.button.element.textContent === 'Stop game') {
-      this.header.button.element.textContent = 'Start game';
-    }
   }
 
   openSettings(): void {

@@ -3,13 +3,16 @@ import { BaseComponent } from '../../shared/baseComponent';
 import { Card } from '../card/card';
 import { CardsField } from '../cards-field/cards-field';
 import { ModalBg } from '../../shared/modalBg/modalBg';
+import { Timer } from '../gameTimer/timer';
 
 const FLIP_DELAY = 1000;
 
 export class Game extends BaseComponent {
   private readonly cardsField: CardsField;
 
-  private activeCard?: Card;
+  readonly timer: Timer;
+
+  public activeCard?: Card;
 
   private isAnimation = false;
 
@@ -17,15 +20,18 @@ export class Game extends BaseComponent {
 
   public winningModal: ModalBg;
 
+
   constructor() {
     super();
     this.cardsField = new CardsField();
+    this.timer = new Timer()
     this.winningModal = new ModalBg();
+    this.element.appendChild(this.timer.element);
     this.element.appendChild(this.cardsField.element);
   }
 
   newGame(images: string[], pairQuantity: number): void {
-    this.cardsField.clear();
+    console.log(this.activeCard);
     const cards = images
       .concat(images)
       .map((url: string) => new Card(url))
@@ -70,5 +76,10 @@ export class Game extends BaseComponent {
     }
     this.activeCard = undefined;
     this.isAnimation = false;
+  }
+
+  stopGame(): void {
+    this.activeCard = undefined;
+    this.cardsField.clear();
   }
 }

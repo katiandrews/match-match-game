@@ -3,11 +3,11 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  perspective: 25rem;
+  perspective: 30rem;
   cursor: pointer;
 
   &:hover > .card {
-    transform: translateZ(2rem);
+    transform: translateZ(1.5rem);
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
   }
 
@@ -41,7 +41,7 @@
   }
 
   &__front {
-    background-color: crimson;
+    background-color: white;
   }
 
   &__back {

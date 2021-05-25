@@ -4,8 +4,7 @@ import { Card } from '../card/card';
 import { CardsField } from '../cards-field/cards-field';
 import { ModalBg } from '../../shared/modalBg/modalBg';
 import { Timer } from '../gameTimer/timer';
-
-const FLIP_DELAY = 1000;
+import { CARDS_SHOW_TIME, FLIP_DELAY } from '../../shared/constants';
 
 export class Game extends BaseComponent {
   private readonly cardsField: CardsField;
@@ -44,6 +43,9 @@ export class Game extends BaseComponent {
     });
 
     this.cardsField.addCards(cards);
+    setTimeout(() => {
+      this.timer.startTimer();
+    }, CARDS_SHOW_TIME);
   }
 
   private async cardHandler(card: Card, pairQuantity: number) {
@@ -69,9 +71,13 @@ export class Game extends BaseComponent {
       this.activeCard.paintBg('green');
       card.paintBg('green');
       this.pairsCounter += 1;
+
       if (this.pairsCounter === pairQuantity) {
+        this.timer.stopTimer();
         this.element.appendChild(this.winningModal.element);
         this.winningModal.winningAlert();
+        console.log(this.winningModal.modalText.element.textContent);
+        this.winningModal.modalText.element.textContent += ` You finished in ${this.timer.stopTimer()}`;
       }
     }
     this.activeCard = undefined;

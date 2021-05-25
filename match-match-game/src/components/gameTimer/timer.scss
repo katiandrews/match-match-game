@@ -1,4 +1,11 @@
 .game-timer {
-  height: 100px;
-  background-color: yellowgreen;
+  display: flex;
+  justify-content: center;
+  padding: 12px 24px;
+  margin: 0 auto;
+  margin-bottom: 16px;
+  width: max-content;
+  background-color: rgb(171, 193, 233);
+  color: rgb(30, 41, 104);
+  font-size: 64px;
 }

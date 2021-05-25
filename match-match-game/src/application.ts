@@ -12,15 +12,15 @@ export class Application {
 
   private main: BaseComponent;
 
-  private aboutGame: AboutGame;
+  private aboutGame: AboutGame = new AboutGame();
 
-  private settings: Settings;
+  private settings: Settings = new Settings();
 
-  private score: Score;
+  private score: Score = new Score();;
 
-  readonly game: Game;
+  readonly game: Game = new Game();
 
-  private form: ModalBg;
+  private form: ModalBg = new ModalBg();;
 
   public usersData = new Database();
 
@@ -29,11 +29,6 @@ export class Application {
     this.rootElement.appendChild(this.header.element);
     this.main = new BaseComponent('main', ['main']);
     this.rootElement.appendChild(this.main.element);
-    this.aboutGame = new AboutGame();
-    this.game = new Game();
-    this.settings = new Settings();
-    this.score = new Score();
-    this.form = new ModalBg();
     this.usersData.init('katiandrews');
     // listen for registrationForm submit
     this.form.registrationForm.element.addEventListener('submit', (event) => {

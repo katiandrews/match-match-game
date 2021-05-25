@@ -21,7 +21,7 @@ export class RegistrationForm extends BaseComponent {
   buttonsContainer: BaseComponent;
 
   constructor() {
-    super('form', ['registration-form', 'visually-hidden']);
+    super('form', ['registration-form']);
     this.element.innerHTML = `
       <h1 class="section-title registration-form-title">How to play?</h1>
       <img src="${avatarPlaceholder}" alt="user avatar" class="form_user-avatar">

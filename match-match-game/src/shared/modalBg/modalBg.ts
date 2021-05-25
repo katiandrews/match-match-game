@@ -4,12 +4,12 @@ import { RegistrationForm } from '../../components/registrationForm/registration
 import { Button } from '../button/button';
 
 export class ModalBg extends BaseComponent {
-  registrationForm: RegistrationForm;
+  registrationForm: RegistrationForm = new RegistrationForm();
   okButton: Button;
+  modalText: BaseComponent = new BaseComponent('span', ['modal-text']);
 
   constructor() {
     super('div', ['modal-background']);
-    this.registrationForm = new RegistrationForm();
     this.okButton = new Button('button', ['button_primary', 'congrats-modal-button'], 'OK');
     this.element.addEventListener('mousedown', (event: Event) => {
       if ((<HTMLElement>event.target).classList.contains('modal-background')) {
@@ -20,13 +20,12 @@ export class ModalBg extends BaseComponent {
 
   registration(): void {
     this.element.appendChild(this.registrationForm.element);
-    this.registrationForm.element.classList.remove('.visually-hidden');
   }
 
   winningAlert(): void {
     const congratsModal = new BaseComponent('div', ['congrats-modal']);
-    congratsModal.element.textContent = 'Congratulations! You found all matches.';
-    congratsModal.element.appendChild(this.okButton.element);
+    this.modalText.element.textContent = 'Congratulations! You found all matches.';
+    congratsModal.element.append(this.modalText.element, this.okButton.element);
     this.element.appendChild(congratsModal.element);
   }
 

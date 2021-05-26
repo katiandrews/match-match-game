@@ -38,15 +38,6 @@ export class Database {
         surname: data2,
         email: data3,
       });
-      result.onsuccess = () => {
-        console.log('complete!', result.result);
-      };
-      result.onerror = () => {
-        console.log('error!', result.error);
-      };
-      transaction.onabort = () => {
-        console.log('abort!');
-      };
     }
   }
 
@@ -65,12 +56,12 @@ export class Database {
             id: lastElement.result.id,
             score: `${score}`,
           });
-          element.onsuccess = () => {
-            console.log('complete!', element.result);
-          };
-          element.onerror = () => {
-            console.log('error!', element.error);
-          };
+          // element.onsuccess = () => {
+          //   console.log('complete!', element.result);
+          // };
+          // element.onerror = () => {
+          //   console.log('error!', element.error);
+          // };
         };
       };
     }
@@ -97,14 +88,14 @@ export class Database {
       result.onsuccess = () => {
         const cursor = result.result;
         if (cursor) {
-          console.log(cursor.value);
+          // console.log(cursor.value);
           resData.push(cursor.value);
           cursor.continue();
         }
       };
 
       transaction.oncomplete = () => {
-        console.log(resData);
+        // console.log(resData);
       };
     }
   }

@@ -1,7 +1,7 @@
 import './header.scss';
 import { BaseComponent } from '../../shared/baseComponent';
 import { Button } from '../../shared/button/button';
-import avatar from '../../assets/settings.jpg';
+import avatar from '../../assets/avatar.png';
 
 export class Header extends BaseComponent {
   button: Button;

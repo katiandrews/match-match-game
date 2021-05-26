@@ -88,7 +88,9 @@ export class RegistrationForm extends BaseComponent {
   validateForm(): void {
     (<HTMLFormElement>this.element).reportValidity(); // shows validity errors
     const nameRegex = new RegExp(/^[№\d]*\p{L}+[№\d\p{L}]*$/, 'u');
-    // const emailRegex = new RegExp(/(?=.*\p{L})[\p{L}0-9]{1,30}/, 'u')
+    const login = /^([\w-]+(?:\.[\w-]+)*|(".+"))@/;
+    const domen = /((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+    const emailRegex = new RegExp(`${login.source}${domen.source}`);
     this.nameInput.validateInput(
       nameRegex,
       'Имя должно содержать хотя бы одну букву и не иметь специальных символов'
@@ -96,6 +98,10 @@ export class RegistrationForm extends BaseComponent {
     this.surnameInput.validateInput(
       nameRegex,
       'Фамилия должна содержать хотя бы одну букву и не иметь специальных символов'
+    );
+    this.emailInput.validateInput(
+      emailRegex,
+      'Email не соответствует стандарту'
     );
 
     const inputs = this.element.querySelectorAll('input');

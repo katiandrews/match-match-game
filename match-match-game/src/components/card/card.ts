@@ -36,7 +36,7 @@ export class Card extends BaseComponent {
     });
   }
 
-  paintBg(color: string) {
+  paintBg(color: string): void {
     const cardFront = this.element.querySelector('.card__front');
     cardFront?.classList.toggle(color);
   }

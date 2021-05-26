@@ -16,11 +16,11 @@ export class Application {
 
   private settings: Settings = new Settings();
 
-  private score: Score = new Score();;
+  private score: Score = new Score();
 
   readonly game: Game = new Game();
 
-  private form: ModalBg = new ModalBg();;
+  private form: ModalBg = new ModalBg();
 
   public usersData = new Database();
 
@@ -84,17 +84,13 @@ export class Application {
     this.main.element.appendChild(this.game.element);
     const res = await fetch('./images.json');
     const categories = await res.json();
-    let category = this.settings.category;
+    const { category } = this.settings;
     const images = categories[category]
       ?.slice(0, this.settings.difficulty)
       .map((name: string) => `${category}/${name}`);
     if (images) {
-      this.game.newGame(images, this.settings.difficulty);
+      this.game.newGame(images, this.settings.difficulty, this.usersData);
     }
-    const openScoreButton = this.game.winningModal.okButton.element;
-    openScoreButton?.addEventListener('click', () => {
-      window.location.hash = '#/score';
-    });
   }
 
   openSettings(): void {

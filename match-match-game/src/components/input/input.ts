@@ -10,7 +10,6 @@ export class Input extends BaseComponent {
     text: string,
     type: string,
     placeholder: string,
-    pattern: string,
     required: boolean,
     maxLength: number
   ) {
@@ -20,9 +19,21 @@ export class Input extends BaseComponent {
     this.input.classList.add('text-input');
     this.input.type = type;
     this.input.placeholder = placeholder;
-    this.input.pattern = pattern;
     this.input.required = required;
     this.input.maxLength = maxLength;
     this.element.appendChild(this.input);
+  }
+
+  validateInput(regex: RegExp, customMessage: string): boolean {
+    if (this.input.value.match(regex)) {
+      this.input.setCustomValidity('');
+      this.input.classList.remove('invalid');
+      this.input.classList.add('valid');
+      return true;
+    }
+    this.input.setCustomValidity(customMessage);
+    this.input.classList.remove('valid');
+    this.input.classList.add('invalid');
+    return false;
   }
 }

@@ -22,10 +22,10 @@
   border-bottom: 2px solid #2196f3;
 }
 
-.text-input:valid {
+.text-input.valid {
   background-color: rgb(136, 207, 114);
 }
 
-.text-input:invalid {
+.text-input.invalid {
   background-color: rgb(250, 179, 179);
 }

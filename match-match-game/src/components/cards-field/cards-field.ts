@@ -2,6 +2,7 @@ import './cards-field.scss';
 import { BaseComponent } from '../../shared/baseComponent';
 import { Card } from '../card/card';
 import { CARDS_SHOW_TIME } from '../../shared/constants';
+
 export class CardsField extends BaseComponent {
   private cards: Card[] = [];
 

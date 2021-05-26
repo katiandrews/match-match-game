@@ -32,7 +32,6 @@ export class RegistrationForm extends BaseComponent {
       'First Name',
       'text',
       'First Name',
-      '^(?=.*[a-zA-Z])[A-Za-z0-9]{1,30}$',
       true,
       30
     );
@@ -42,7 +41,6 @@ export class RegistrationForm extends BaseComponent {
       'Last Name',
       'text',
       'Last Name',
-      '^(?=.*[a-zA-Z])[A-Za-z0-9]{1,30}$',
       true,
       30
     );
@@ -52,7 +50,6 @@ export class RegistrationForm extends BaseComponent {
       'Email',
       'text',
       'Email',
-      '^(?=.*[a-zA-Z])[A-Za-z0-9]{1,30}$',
       true,
       30
     );
@@ -90,9 +87,20 @@ export class RegistrationForm extends BaseComponent {
 
   validateForm(): void {
     (<HTMLFormElement>this.element).reportValidity(); // shows validity errors
+    const nameRegex = new RegExp(/^[№\d]*\p{L}+[№\d\p{L}]*$/, 'u');
+    // const emailRegex = new RegExp(/(?=.*\p{L})[\p{L}0-9]{1,30}/, 'u')
+    this.nameInput.validateInput(
+      nameRegex,
+      'Имя должно содержать хотя бы одну букву и не иметь специальных символов'
+    );
+    this.surnameInput.validateInput(
+      nameRegex,
+      'Фамилия должна содержать хотя бы одну букву и не иметь специальных символов'
+    );
+
     const inputs = this.element.querySelectorAll('input');
     for (let i = 0; i < inputs.length; i += 1) {
-      if (inputs[i].validity.valid === false) {
+      if (inputs[i].classList.contains('invalid')) {
         (<HTMLButtonElement>this.addButton.element).disabled = true;
         return;
       }

@@ -5,6 +5,7 @@ import { CardsField } from '../cards-field/cards-field';
 import { ModalBg } from '../../shared/modalBg/modalBg';
 import { Timer } from '../gameTimer/timer';
 import { CARDS_SHOW_TIME, FLIP_DELAY } from '../../shared/constants';
+import { Database } from '../../shared/indexeddb';
 
 export class Game extends BaseComponent {
   private readonly cardsField: CardsField;
@@ -17,20 +18,17 @@ export class Game extends BaseComponent {
 
   private pairsCounter = 0;
 
-  public winningModal: ModalBg;
-
+  public winningModal: ModalBg = new ModalBg();
 
   constructor() {
     super();
     this.cardsField = new CardsField();
-    this.timer = new Timer()
-    this.winningModal = new ModalBg();
+    this.timer = new Timer();
     this.element.appendChild(this.timer.element);
     this.element.appendChild(this.cardsField.element);
   }
 
-  newGame(images: string[], pairQuantity: number): void {
-    console.log(this.activeCard);
+  newGame(images: string[], pairQuantity: number, database: Database): void {
     const cards = images
       .concat(images)
       .map((url: string) => new Card(url))
@@ -38,7 +36,7 @@ export class Game extends BaseComponent {
 
     cards.forEach((card) => {
       card.element.addEventListener('click', () =>
-        this.cardHandler(card, pairQuantity)
+        this.cardHandler(card, pairQuantity, database)
       );
     });
 
@@ -48,7 +46,7 @@ export class Game extends BaseComponent {
     }, CARDS_SHOW_TIME);
   }
 
-  private async cardHandler(card: Card, pairQuantity: number) {
+  private async cardHandler(card: Card, pairQuantity: number, store: Database) {
     if (this.isAnimation) return;
     if (!card.isFlipped) return;
     this.isAnimation = true;
@@ -73,15 +71,19 @@ export class Game extends BaseComponent {
       this.pairsCounter += 1;
 
       if (this.pairsCounter === pairQuantity) {
-        this.timer.stopTimer();
-        this.element.appendChild(this.winningModal.element);
-        this.winningModal.winningAlert();
-        console.log(this.winningModal.modalText.element.textContent);
-        this.winningModal.modalText.element.textContent += ` You finished in ${this.timer.stopTimer()}`;
+        this.finish();
+        store.addScore(50);
       }
     }
     this.activeCard = undefined;
     this.isAnimation = false;
+  }
+
+  finish(): void {
+    this.timer.stopTimer();
+    this.element.appendChild(this.winningModal.element);
+    this.winningModal.winningAlert();
+    this.winningModal.modalText.element.textContent += ` You finished in ${this.timer.stopTimer()}`;
   }
 
   stopGame(): void {

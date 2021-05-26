@@ -16,6 +16,7 @@ export class Database {
       });
       usersStore.createIndex('name', 'name');
       usersStore.createIndex('email', 'email', { unique: true });
+      usersStore.createIndex('score', 'score');
       this.db = database;
     };
 
@@ -49,14 +50,40 @@ export class Database {
     }
   }
 
-  readAll(): void {
+  addScore(score: number): void {
+    // TODO: FIX THIS
+    if (this.db) {
+      const transaction = this.db.transaction('users', 'readwrite');
+      const usersStore = transaction.objectStore('users');
+      const elementsArray = usersStore.getAll();
+
+      elementsArray.onsuccess = () => {
+        const { result } = elementsArray;
+        const lastElement = usersStore.get(result.length - 1);
+        lastElement.onsuccess = () => {
+          const element = usersStore.put({
+            id: lastElement.result.id,
+            score: `${score}`,
+          });
+          element.onsuccess = () => {
+            console.log('complete!', element.result);
+          };
+          element.onerror = () => {
+            console.log('error!', element.error);
+          };
+        };
+      };
+    }
+  }
+
+  readAll(): void | Record<string, unknown> {
     if (this.db) {
       const transaction = this.db.transaction('users', 'readonly');
       const usersStore = transaction.objectStore('users');
       const result = usersStore.getAll();
 
       transaction.oncomplete = () => {
-        console.log(result.result);
+        return result.result;
       };
     }
   }

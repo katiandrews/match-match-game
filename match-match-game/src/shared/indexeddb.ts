@@ -17,6 +17,7 @@ export class Database {
       usersStore.createIndex('name', 'name');
       usersStore.createIndex('email', 'email', { unique: true });
       usersStore.createIndex('score', 'score');
+      console.log(usersStore.index('score'));
       this.db = database;
     };
 
@@ -33,32 +34,36 @@ export class Database {
     if (this.db) {
       const transaction = this.db.transaction('users', 'readwrite');
       const usersStore = transaction.objectStore('users');
-      const result = usersStore.put({
+      usersStore.put({
         name: data1,
         surname: data2,
         email: data3,
+        score: 0,
       });
     }
   }
 
-  addScore(score: number): void {
-    // TODO: FIX THIS
+  addScore(userScore: number): void {
     if (this.db) {
       const transaction = this.db.transaction('users', 'readwrite');
       const usersStore = transaction.objectStore('users');
-      const elementsArray = usersStore.getAll();
+      const getAll = usersStore.getAll();
 
-      elementsArray.onsuccess = () => {
-        const { result } = elementsArray;
-        const lastElement = usersStore.get(result.length - 1);
-        lastElement.onsuccess = () => {
-          const element = usersStore.put({
-            id: lastElement.result.id,
-            score: `${score}`,
-          });
-        };
+      transaction.oncomplete = () => {
+        const elementsArray = getAll.result;
+        const lastElementIndex = elementsArray.length-1;
+        const lastElement = elementsArray[lastElementIndex];
+        console.log(lastElement);
+        this.db?.transaction('users', 'readwrite')
+                .objectStore('users')
+                .put({
+                  name: lastElement.name,
+                  surname: lastElement.surname,
+                  email: lastElement.email,
+                  id: lastElement.id,
+                  score: userScore});
       };
-    }
+    };
   }
 
   readAll(): void | Record<string, unknown> {
@@ -67,7 +72,7 @@ export class Database {
       const usersStore = transaction.objectStore('users');
       const result = usersStore.getAll();
 
-      transaction.oncomplete = () => {
+      result.onsuccess = () => {
         return result.result;
       };
     }
@@ -77,14 +82,16 @@ export class Database {
     if (this.db) {
       const transaction = this.db.transaction('users', 'readonly');
       const usersStore = transaction.objectStore('users');
-      const result = usersStore.index('email').openCursor(null, 'prev');
+      const result = usersStore.index('score').openCursor(null, 'prev');
       const resData: Array<number> = [];
       result.onsuccess = () => {
         const cursor = result.result;
-        if (cursor) {
+        for (let i = 0; i < 10; i += 1) {
+          if (cursor) {
           console.log(cursor.value);
           resData.push(cursor.value);
           cursor.continue();
+        }
         }
       };
 
@@ -94,3 +101,4 @@ export class Database {
     }
   }
 }
+

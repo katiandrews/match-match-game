@@ -16,7 +16,7 @@ export class Game extends BaseComponent {
 
   private isAnimation = false;
 
-  private pairsCounter = 0;
+  private successPairsCounter = 0;
 
   public winningModal: ModalBg = new ModalBg();
 
@@ -68,22 +68,25 @@ export class Game extends BaseComponent {
     } else {
       this.activeCard.paintBg('green');
       card.paintBg('green');
-      this.pairsCounter += 1;
+      this.successPairsCounter += 1;
 
-      if (this.pairsCounter === pairQuantity) {
-        this.finish();
-        store.addScore(50);
+      if (this.successPairsCounter === pairQuantity) {
+        const gameScore = this.finish();
+        store.addScore(gameScore);
       }
     }
     this.activeCard = undefined;
     this.isAnimation = false;
   }
 
-  finish(): void {
+  finish(): number {
+    const gameTime = this.timer.timeinSec();
     this.timer.stopTimer();
     this.element.appendChild(this.winningModal.element);
     this.winningModal.winningAlert();
     this.winningModal.modalText.element.textContent += ` You finished in ${this.timer.stopTimer()}`;
+    const gameScore = this.successPairsCounter * 100 - gameTime * 10;
+    return gameScore;
   }
 
   stopGame(): void {

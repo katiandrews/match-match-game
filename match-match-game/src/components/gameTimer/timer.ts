@@ -34,6 +34,13 @@ export class Timer extends BaseComponent {
     return `${formattedMin}:${formattedSec}`;
   }
 
+  timeinSec(): number {
+    const minutesinSec = Number(this.timeToString().slice(0,2)) * 60;
+    const secs = Number(this.timeToString().slice(3,5))
+
+    return minutesinSec + secs;
+  }
+
   stopTimer(): string {
     const timePassed = this.timeToString();
     if (this.interval) clearInterval(this.interval);

@@ -88,8 +88,8 @@ export class RegistrationForm extends BaseComponent {
   validateForm(): void {
     (<HTMLFormElement>this.element).reportValidity(); // shows validity errors
     const nameRegex = new RegExp(/^[№\d]*\p{L}+[№\d\p{L}]*$/, 'u');
-    const login = /^([\w-]+(?:\.[\w-]+)*|(".+"))@/;
-    const domen = /((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+    const login = new RegExp(/^([\w-]+(?:\.[\w-]+)*|(".+"))@/);
+    const domen = new RegExp(/((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/);
     const emailRegex = new RegExp(`${login.source}${domen.source}`);
     this.nameInput.validateInput(
       nameRegex,

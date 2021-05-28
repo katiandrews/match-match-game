@@ -1,3 +1,5 @@
+import { usersData } from "../models/user-data-model";
+
 export class Database {
   public db: IDBDatabase | null;
 
@@ -17,7 +19,6 @@ export class Database {
       usersStore.createIndex('name', 'name');
       usersStore.createIndex('email', 'email', { unique: true });
       usersStore.createIndex('score', 'score');
-      console.log(usersStore.index('score'));
       this.db = database;
     };
 
@@ -27,17 +28,17 @@ export class Database {
   }
 
   write(
-    data1: string | number,
-    data2: string | number,
-    data3: string | number
+    name: string,
+    surname: string,
+    email: string
   ): void {
     if (this.db) {
       const transaction = this.db.transaction('users', 'readwrite');
       const usersStore = transaction.objectStore('users');
       usersStore.put({
-        name: data1,
-        surname: data2,
-        email: data3,
+        name: name,
+        surname: surname,
+        email: email,
         score: 0,
       });
     }
@@ -50,10 +51,9 @@ export class Database {
       const getAll = usersStore.getAll();
 
       transaction.oncomplete = () => {
-        const elementsArray = getAll.result;
+        const elementsArray: Array<usersData> = getAll.result;
         const lastElementIndex = elementsArray.length-1;
         const lastElement = elementsArray[lastElementIndex];
-        console.log(lastElement);
         this.db?.transaction('users', 'readwrite')
                 .objectStore('users')
                 .put({
@@ -66,39 +66,48 @@ export class Database {
     };
   }
 
-  readAll(): void | Record<string, unknown> {
-    if (this.db) {
-      const transaction = this.db.transaction('users', 'readonly');
-      const usersStore = transaction.objectStore('users');
+  readAll(collection: string): Promise<Array<object>> {
+    return new Promise((resolve, reject) => {
+      if (this.db) {
+      const transaction = this.db.transaction(collection, 'readonly');
+      const usersStore = transaction.objectStore(collection);
       const result = usersStore.getAll();
 
-      result.onsuccess = () => {
-        return result.result;
+      transaction.oncomplete = () => {
+        resolve(result.result);
       };
-    }
+      transaction.onerror = () => {
+        reject(result.error);
+      }
+      }
+    })
   }
 
-  readFilteredScore(): void {
-    if (this.db) {
+  readFilteredScore(): Promise<Array<usersData>>  {
+    return new Promise<Array<usersData>>((resolve, reject) => {
+      if (this.db) {
       const transaction = this.db.transaction('users', 'readonly');
       const usersStore = transaction.objectStore('users');
       const result = usersStore.index('score').openCursor(null, 'prev');
-      const resData: Array<number> = [];
+      const resData: Array<usersData> = [];
+
       result.onsuccess = () => {
         const cursor = result.result;
-        for (let i = 0; i < 10; i += 1) {
-          if (cursor) {
-          console.log(cursor.value);
+        if (cursor && resData.length < 10) {
+          // console.log(cursor.value);
           resData.push(cursor.value);
           cursor.continue();
         }
-        }
       };
-
       transaction.oncomplete = () => {
-        console.log(resData);
+        // console.log(resData);
+        resolve(resData);
       };
-    }
+    }})
   }
 }
+
+
+
+
 

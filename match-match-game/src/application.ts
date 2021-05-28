@@ -105,6 +105,7 @@ export class Application {
       .querySelector('.score')
       ?.classList.add('nav-list_item__active');
     this.main.element.appendChild(this.score.element);
+    this.score.addBestPlayers(this.usersData);
   }
 
   registerUser(): void {

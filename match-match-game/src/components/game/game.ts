@@ -86,11 +86,14 @@ export class Game extends BaseComponent {
     this.winningModal.winningAlert();
     this.winningModal.modalText.element.textContent += ` You finished in ${this.timer.stopTimer()}`;
     const gameScore = this.successPairsCounter * 100 - gameTime * 10;
-    return gameScore;
+    if (gameScore > 0) return gameScore;
+    return 0;
   }
 
   stopGame(): void {
-    this.activeCard = undefined;
+    this.winningModal.close();
     this.cardsField.clear();
+    this.successPairsCounter = 0;
+    this.activeCard = undefined;
   }
 }

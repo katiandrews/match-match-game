@@ -4,5 +4,11 @@
   height: 80vh;
   background-color: rgb(238, 238, 238);
   margin: 33px auto;
-  padding: 28px 184px 85px 36px;
+  padding: 24px 40px;
+}
+
+.score-table {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }

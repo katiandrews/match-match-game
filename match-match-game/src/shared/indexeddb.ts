@@ -94,13 +94,11 @@ export class Database {
       result.onsuccess = () => {
         const cursor = result.result;
         if (cursor && resData.length < 10) {
-          // console.log(cursor.value);
           resData.push(cursor.value);
           cursor.continue();
         }
       };
       transaction.oncomplete = () => {
-        // console.log(resData);
         resolve(resData);
       };
     }})

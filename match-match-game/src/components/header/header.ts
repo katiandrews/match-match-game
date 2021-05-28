@@ -6,7 +6,7 @@ import avatar from '../../assets/avatar.png';
 export class Header extends BaseComponent {
   button: Button;
 
-  userAvatar: BaseComponent;
+  userAvatar: BaseComponent<HTMLImageElement>;
 
   constructor() {
     super('header', ['main-header']);
@@ -38,7 +38,7 @@ export class Header extends BaseComponent {
   addUser(): void {
     this.button.element.textContent = 'Start game';
     this.element.appendChild(this.userAvatar.element);
-    (<HTMLImageElement>this.userAvatar.element).src = avatar;
+    this.userAvatar.element.src = avatar;
   }
 
   changeStartStopButton(): void {

@@ -5,7 +5,7 @@ import { Input } from '../input/input';
 import avatarPlaceholder from '../../assets/avatar.png';
 import { Database } from '../../shared/indexeddb';
 
-export class RegistrationForm extends BaseComponent {
+export class RegistrationForm extends BaseComponent<HTMLFormElement> {
   private addButton: Button;
 
   private cancelButton: Button;
@@ -59,7 +59,7 @@ export class RegistrationForm extends BaseComponent {
       'add user',
       'submit'
     );
-    (<HTMLButtonElement>this.addButton.element).disabled = true;
+    this.addButton.element.disabled = true;
     this.cancelButton = new Button(
       'button',
       ['button_secondary', 'form-button'],
@@ -86,7 +86,7 @@ export class RegistrationForm extends BaseComponent {
   }
 
   validateForm(): void {
-    (<HTMLFormElement>this.element).reportValidity(); // shows validity errors
+    this.element.reportValidity(); // shows validity errors
     const nameRegex = new RegExp(/^[№\d]*\p{L}+[№\d\p{L}]*$/, 'u');
     const login = new RegExp(/^([\w-]+(?:\.[\w-]+)*|(".+"))@/);
     const domen = new RegExp(/((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/);
@@ -107,11 +107,11 @@ export class RegistrationForm extends BaseComponent {
     const inputs = this.element.querySelectorAll('input');
     for (let i = 0; i < inputs.length; i += 1) {
       if (inputs[i].classList.contains('invalid')) {
-        (<HTMLButtonElement>this.addButton.element).disabled = true;
+        this.addButton.element.disabled = true;
         return;
       }
     }
-    (<HTMLButtonElement>this.addButton.element).disabled = false;
+    this.addButton.element.disabled = false;
   }
 
   sendData(store: Database): void {

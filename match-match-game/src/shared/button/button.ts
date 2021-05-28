@@ -1,7 +1,7 @@
 import './button.scss';
 import { BaseComponent } from '../baseComponent';
 
-export class Button extends BaseComponent {
+export class Button extends BaseComponent<HTMLButtonElement> {
   constructor(
     tag: keyof HTMLElementTagNameMap = 'button',
     styles: string[] = [],
@@ -9,7 +9,7 @@ export class Button extends BaseComponent {
     type = 'button'
   ) {
     super(tag, styles);
-    (<HTMLButtonElement>this.element).textContent = text;
-    (<HTMLButtonElement>this.element).type = type;
+    this.element.textContent = text;
+    this.element.type = type;
   }
 }

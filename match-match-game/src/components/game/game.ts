@@ -83,7 +83,7 @@ export class Game extends BaseComponent {
     const gameTime = this.timer.timeinSec();
     this.timer.stopTimer();
     this.element.appendChild(this.winningModal.element);
-    this.winningModal.winningAlert();
+    this.winningModal.alertWin();
     this.winningModal.modalText.element.textContent += ` You finished in ${this.timer.stopTimer()}`;
     const gameScore = this.successPairsCounter * 100 - gameTime * 10;
     if (gameScore > 0) return gameScore;

@@ -24,11 +24,11 @@ export class ModalBg extends BaseComponent {
     });
   }
 
-  registration(): void {
+  openRegistration(): void {
     this.element.appendChild(this.registrationForm.element);
   }
 
-  winningAlert(): void {
+  alertWin(): void {
     const congratsModal = new BaseComponent('div', ['congrats-modal']);
     this.modalText.element.textContent =
       'Congratulations! You found all matches.';

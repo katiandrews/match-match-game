@@ -55,7 +55,7 @@ export class Application {
     this.header.button.element.addEventListener('click', () => {
       if (this.header.button.element.textContent === 'Register new player') {
         this.main.element.appendChild(this.form.element);
-        this.form.registration();
+        this.form.openRegistration();
       } else if (this.header.button.element.textContent === 'Start game') {
         window.location.hash = '#/game';
         this.header.button.element.textContent = 'Stop game';

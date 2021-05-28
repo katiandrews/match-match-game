@@ -1,6 +1,6 @@
 import './table-line.scss';
-import { usersData } from "../../models/user-data-model";
-import { BaseComponent } from "../baseComponent";
+import { UsersData } from '../../models/user-data-model';
+import { BaseComponent } from '../baseComponent';
 
 export class TableLine extends BaseComponent {
   name: BaseComponent = new BaseComponent('p', ['score_user-name']);
@@ -19,7 +19,7 @@ export class TableLine extends BaseComponent {
     this.element.appendChild(hr);
   }
 
-  render(user: usersData): HTMLElement {
+  render(user: UsersData): HTMLElement {
     this.name.element.textContent = `${user.name} ${user.surname}`;
     this.email.element.textContent = `${user.email}`;
     this.score.element.innerHTML = `Score: <span class="user-score_accent">${user.score}</span>`;

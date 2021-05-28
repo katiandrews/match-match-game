@@ -35,8 +35,8 @@ export class Timer extends BaseComponent {
   }
 
   timeinSec(): number {
-    const minutesinSec = Number(this.timeToString().slice(0,2)) * 60;
-    const secs = Number(this.timeToString().slice(3,5))
+    const minutesinSec = Number(this.timeToString().slice(0, 2)) * 60;
+    const secs = Number(this.timeToString().slice(3, 5));
 
     return minutesinSec + secs;
   }

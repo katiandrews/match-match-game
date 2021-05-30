@@ -1,37 +1,72 @@
 import './settings.scss';
 import { BaseComponent } from '../../shared/baseComponent';
+interface selectOptions {
+  value: string;
+  text: string;
+  disabled?: boolean,
+  selected?: boolean
+}
+
+const categories: selectOptions[] = [
+  {value: '', text: 'Select game cards type', disabled: true, selected: true},
+  {value: 'memes', text: 'Memes'},
+  {value: 'cities', text: 'Cities'},
+  {value: 'pokemons', text: 'Pokemons'}
+]
+const difficulty = [
+  {value: '', text: 'Select game size', disabled: true, selected: true},
+  {value: '8', text: '4x4'},
+  {value: '18', text: '6x6'}
+]
 
 export class Settings extends BaseComponent {
+  private categorySelect: BaseComponent<HTMLSelectElement> = new BaseComponent('select', ['settings_category']);
+
+  private difficultySelect: BaseComponent<HTMLSelectElement> = new BaseComponent('select', ['settings_difficulty']);
+
   public difficulty = 8;
 
   public category = 'memes';
 
   constructor() {
     super('section', ['game-settings']);
-    this.element.innerHTML = `
-     <h2 class="section-title">Game cards</h2>
-     <select name="category" class="settings_category">
-      <option value="memes">Select game cards type</option>
-      <option value="memes">Memes</option>
-      <option value="cities">Cities</option>
-      <option value="pokemons">Pokemons</option>
-      </select>
-     <h2 class="section-title">Difficulty</h2>
-     <select name="difficulty" class="settings_difficulty">
-      <option value="4x4">Select game type</option>
-      <option value="4x4">4x4</option>
-      <option value="6x6">6x6</option>
-      </select>
-    `;
-    const categorySelect = this.element.querySelector('.settings_category');
-    categorySelect?.addEventListener('change', () => {
-      this.category = (<HTMLSelectElement>categorySelect).value;
+
+    const categoryTitle = new BaseComponent('h2', ['section-title']);
+    categoryTitle.element.textContent = 'Game cards';
+    const difficultyTitle = new BaseComponent('h2', ['section-title']);
+    difficultyTitle.element.textContent = 'Difficulty';
+
+    difficulty.map((element: selectOptions) => {
+      const option = document.createElement('option');
+      option.value = element.value;
+      option.textContent= element.text;
+      if (element.disabled) option.disabled = element.disabled;
+      if (element.selected) option.selected = element.selected;
+      this.difficultySelect.element.appendChild(option);
+    })
+
+    categories.map((element: selectOptions) => {
+      const option = document.createElement('option');
+      option.value = element.value;
+      option.textContent= element.text;
+      if (element.disabled) option.disabled = element.disabled;
+      if (element.selected) option.selected = element.selected;
+      this.categorySelect.element.appendChild(option);
+    })
+
+    this.element.append(
+      categoryTitle.element,
+      this.categorySelect.element,
+      difficultyTitle.element,
+      this.difficultySelect.element
+      );
+
+    this.categorySelect.element.addEventListener('change', () => {
+      this.category = this.categorySelect.element.value;
     });
 
-    const difficultySelect = this.element.querySelector('.settings_difficulty');
-    difficultySelect?.addEventListener('change', () => {
-      this.difficulty =
-        Number((<HTMLSelectElement>difficultySelect).value[0]) ** 2 / 2;
+    this.difficultySelect.element.addEventListener('change', () => {
+      this.difficulty = Number(this.difficultySelect.element.value);
     });
   }
 }

@@ -36,33 +36,18 @@ export class Application {
       this.registerUser();
     });
 
-    this.header.element.addEventListener('click', (event) => {
-      event.preventDefault();
-      if ((<HTMLElement>event.target).classList.contains('home')) {
-        window.location.hash = '#/';
-      }
-
-      if ((<HTMLElement>event.target).classList.contains('score')) {
-        window.location.hash = '#/score';
-      }
-
-      if ((<HTMLElement>event.target).classList.contains('settings')) {
-        window.location.hash = '#/settings';
-      }
-    });
-
     // listens for start/stop game button clicks
     this.header.button.element.addEventListener('click', () => {
-      if (this.header.button.element.textContent === 'Register new player') {
+      if (this.header.button.getText() === 'Register new player') {
         this.main.element.appendChild(this.form.element);
         this.form.openRegistration();
-      } else if (this.header.button.element.textContent === 'Start game') {
+      } else if (this.header.button.getText() === 'Start game') {
         window.location.hash = '#/game';
-        this.header.button.element.textContent = 'Stop game';
-      } else if (this.header.button.element.textContent === 'Stop game') {
-        window.location.hash = '#/';
-        this.header.button.element.textContent = 'Start game';
+        this.header.button.setText('Stop game');
+      } else if (this.header.button.getText() === 'Stop game') {
         this.game.stopGame();
+        window.location.hash = '#/';
+        this.header.button.setText('Start game');
       }
     });
   }
@@ -111,6 +96,7 @@ export class Application {
   registerUser(): void {
     this.form.registrationForm.sendData(this.usersData);
     this.form.close();
+    this.header.unlockDisabledElement();
     this.header.addUser();
   }
 }

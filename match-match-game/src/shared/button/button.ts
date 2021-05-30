@@ -12,4 +12,12 @@ export class Button extends BaseComponent<HTMLButtonElement> {
     this.element.textContent = text;
     this.element.type = type;
   }
+
+  getText() {
+    return this.element.textContent;
+  }
+
+  setText(text: string): void {
+    this.element.textContent = text;
+  }
 }

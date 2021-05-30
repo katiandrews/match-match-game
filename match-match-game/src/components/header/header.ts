@@ -2,8 +2,27 @@ import './header.scss';
 import { BaseComponent } from '../../shared/baseComponent';
 import { Button } from '../../shared/button/button';
 import avatar from '../../assets/avatar.png';
+interface liContent {
+  LiClass: string[]
+  linkClass: string[],
+  linkText: string,
+}
+
+const navContent: liContent[] = [
+  { LiClass: ['nav-list_item', 'nav-list_item__active', 'home'],
+    linkClass: ['nav-list_item-link', 'home'],
+    linkText: 'About Game'},
+  { LiClass: ['nav-list_item', 'nav-list_item__disabled', 'score'],
+    linkClass: ['nav-list_item-link', 'score'],
+    linkText: 'Best Score'},
+    { LiClass: ['nav-list_item', 'settings'],
+    linkClass: ['nav-list_item-link', 'settings'],
+    linkText: 'Game Settings'},
+];
 
 export class Header extends BaseComponent {
+  navItems: BaseComponent[] = [];
+
   button: Button;
 
   userAvatar: BaseComponent<HTMLImageElement>;
@@ -14,18 +33,19 @@ export class Header extends BaseComponent {
       <a href="#" class="main-logo home"></a>
       <nav class="header-nav">
         <ul class="nav-list">
-          <li class="nav-list_item nav-list_item__active home">
-            <a href="/" class="nav-list_item-link home">About Game</a>
-          </li>
-          <li class="nav-list_item score">
-            <a href="/score" class="nav-list_item-link score">Best Score</a>
-          </li>
-          <li class="nav-list_item settings">
-            <a href="/settings" class="nav-list_item-link settings">Game Settings</a>
-          </li>
         </ul>
       </nav>
     `;
+
+    navContent.map((element) => {
+      const li = new BaseComponent('li', element.LiClass);
+      this.navItems.push(li);
+      const a = new BaseComponent('a', element.linkClass);
+      a.element.textContent = element.linkText;
+      li.element.appendChild(a.element);
+      this.element.querySelector('.nav-list')?.appendChild(li.element);
+    })
+
     this.button = new Button(
       'button',
       ['button_secondary'],
@@ -33,6 +53,22 @@ export class Header extends BaseComponent {
     );
     this.element.appendChild(this.button.element);
     this.userAvatar = new BaseComponent('img', ['user-avatar']);
+
+    for (let i = 0; i < this.navItems.length; i+= 1) {
+      this.navItems[i].element.addEventListener('click', (event) => {
+        if ((<HTMLElement>event.currentTarget).classList.contains('home')) {
+        window.location.hash = '#/';
+      }
+      if ((<HTMLElement>event.currentTarget).classList.contains('score')) {
+        if(!(<HTMLElement>event.currentTarget).classList.contains('nav-list_item__disabled')) {
+          window.location.hash = '#/score';
+        }
+      }
+      if ((<HTMLElement>event.currentTarget).classList.contains('settings')) {
+        window.location.hash = '#/settings';
+      }
+      })
+    }
   }
 
   addUser(): void {
@@ -45,5 +81,9 @@ export class Header extends BaseComponent {
     if (this.button.element.textContent === 'Stop game') {
       this.button.element.textContent = 'Start game';
     }
+  }
+
+  unlockDisabledElement() {
+    document.querySelector('.nav-list_item__disabled')?.classList.remove('nav-list_item__disabled');
   }
 }

@@ -13,7 +13,7 @@ export class Button extends BaseComponent<HTMLButtonElement> {
     this.element.type = type;
   }
 
-  getText() {
+  getText(): string | null {
     return this.element.textContent;
   }
 

@@ -32,7 +32,7 @@ export class Application {
     this.usersData.init('katiandrews');
     // listen for registrationForm submit
     this.form.registrationForm.element.addEventListener('submit', (event) => {
-      event?.preventDefault();
+      event.preventDefault();
       this.registerUser();
     });
 

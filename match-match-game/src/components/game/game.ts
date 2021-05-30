@@ -59,15 +59,15 @@ export class Game extends BaseComponent {
     }
 
     if (this.activeCard.image !== card.image) {
-      this.activeCard.paintBg('red');
-      card.paintBg('red');
+      this.activeCard.toggleClass('red');
+      card.toggleClass('red');
       await delay(FLIP_DELAY);
       await Promise.all([this.activeCard.flipBack(), card.flipBack()]);
-      this.activeCard.paintBg('red');
-      card.paintBg('red');
+      this.activeCard.toggleClass('red');
+      card.toggleClass('red');
     } else {
-      this.activeCard.paintBg('green');
-      card.paintBg('green');
+      this.activeCard.toggleClass('green');
+      card.toggleClass('green');
       this.successPairsCounter += 1;
 
       if (this.successPairsCounter === pairQuantity) {
@@ -91,9 +91,11 @@ export class Game extends BaseComponent {
   }
 
   stopGame(): void {
+    this.timer.stopTimer();
     this.winningModal.close();
     this.cardsField.clear();
     this.successPairsCounter = 0;
     this.activeCard = undefined;
+    this.isAnimation = false;
   }
 }

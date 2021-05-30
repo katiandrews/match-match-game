@@ -44,13 +44,10 @@ export class Timer extends BaseComponent {
   stopTimer(): string {
     const timePassed = this.timeToString();
     if (this.interval) clearInterval(this.interval);
+    this.elapsedTime = 0;
     this.element.innerHTML = '00:00';
     return `${Number(timePassed.slice(0, 2))} min, ${Number(
       timePassed.slice(3, 5)
     )} sec.`;
   }
-
-  // update() {
-  //   this.element.innerHTML = '00:00';
-  // }
 }

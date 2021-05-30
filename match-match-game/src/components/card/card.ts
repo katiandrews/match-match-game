@@ -19,25 +19,25 @@ export class Card extends BaseComponent {
 
   flipBack(): Promise<void> {
     this.isFlipped = true;
-    return this.flip(true);
+    return this.flip();
   }
 
   flipFront(): Promise<void> {
     this.isFlipped = false;
-    return this.flip(false);
+    return this.flip();
   }
 
-  private flip(isFront = false): Promise<void> {
+  private flip(): Promise<void> {
     return new Promise((resolve) => {
-      this.element.classList.toggle(FLIP_CLASS, isFront);
+      this.element.classList.toggle(FLIP_CLASS, this.isFlipped);
       this.element.addEventListener('transitionend', () => resolve(), {
         once: true,
       });
     });
   }
 
-  paintBg(color: string): void {
+  toggleClass(className: string): void {
     const cardFront = this.element.querySelector('.card__front');
-    cardFront?.classList.toggle(color);
+    cardFront?.classList.toggle(className);
   }
 }

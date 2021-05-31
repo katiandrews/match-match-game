@@ -10,7 +10,7 @@ import { Database } from '../../shared/indexeddb';
 export class Game extends BaseComponent {
   private readonly cardsField: CardsField;
 
-  readonly timer: Timer;
+  private timer: Timer;
 
   public activeCard?: Card;
 
@@ -24,11 +24,13 @@ export class Game extends BaseComponent {
     super();
     this.cardsField = new CardsField();
     this.timer = new Timer();
-    this.element.appendChild(this.timer.element);
     this.element.appendChild(this.cardsField.element);
   }
 
   newGame(images: string[], pairQuantity: number, database: Database): void {
+    this.timer = new Timer();
+    this.element.insertBefore(this.timer.element, this.cardsField.element);
+
     const cards = images
       .concat(images)
       .map((url: string) => new Card(url))
@@ -91,7 +93,7 @@ export class Game extends BaseComponent {
   }
 
   stopGame(): void {
-    this.timer.stopTimer();
+    this.timer.element.remove();
     this.winningModal.close();
     this.cardsField.clear();
     this.successPairsCounter = 0;

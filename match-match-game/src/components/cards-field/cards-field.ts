@@ -1,7 +1,6 @@
 import './cards-field.scss';
 import { BaseComponent } from '../../shared/baseComponent';
 import { Card } from '../card/card';
-import { CARDS_SHOW_TIME } from '../../shared/constants';
 
 export class CardsField extends BaseComponent {
   private cards: Card[] = [];
@@ -20,7 +19,7 @@ export class CardsField extends BaseComponent {
     this.cards.forEach((card) => this.element.appendChild(card.element));
   }
 
-  flipCards() {
+  flipCards(): void {
     this.cards.forEach((card) => card.flipBack());
   }
 }

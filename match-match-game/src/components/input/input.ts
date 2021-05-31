@@ -16,7 +16,7 @@ export class Input extends BaseComponent {
     super(tag, styles);
     this.element.textContent = text;
     this.input = document.createElement('input');
-    this.input.classList.add('text-input');
+    this.input.classList.add(...['text-input', 'invalid']);
     this.input.type = type;
     this.input.placeholder = placeholder;
     this.input.required = required;
@@ -32,6 +32,7 @@ export class Input extends BaseComponent {
       return true;
     }
     this.input.setCustomValidity(customMessage);
+    this.input.reportValidity();
     this.input.classList.remove('valid');
     this.input.classList.add('invalid');
     return false;

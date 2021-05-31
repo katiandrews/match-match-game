@@ -79,33 +79,48 @@ export class RegistrationForm extends BaseComponent<HTMLFormElement> {
     this.element.appendChild(this.inputContainer.element);
     this.element.appendChild(this.buttonsContainer.element);
 
-    this.element.addEventListener('input', () => {
-      // check if form is valid on input event
-      this.validateForm();
+    const inputs = this.element.querySelectorAll('input');
+
+    inputs.forEach((input) => {
+      input.addEventListener('input', (event) => {
+        this.validateForm(event);
+        this.checkSubmitButton();
+      });
     });
+
+    this.cancelButton.element.addEventListener('click', () => this.clearForm());
   }
 
-  validateForm(): void {
-    this.element.reportValidity(); // shows validity errors
+  validateForm(event: Event): void {
     const nameRegex = new RegExp(/^[№\d]*\p{L}+[№\d\p{L}]*$/, 'u');
     const login = new RegExp(/^([\w-]+(?:\.[\w-]+)*|(".+"))@/);
     const domen = new RegExp(
       /((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/
     );
     const emailRegex = new RegExp(`${login.source}${domen.source}`);
-    this.nameInput.validateInput(
-      nameRegex,
-      'Имя должно содержать хотя бы одну букву и не иметь специальных символов'
-    );
-    this.surnameInput.validateInput(
-      nameRegex,
-      'Фамилия должна содержать хотя бы одну букву и не иметь специальных символов'
-    );
-    this.emailInput.validateInput(
-      emailRegex,
-      'Email не соответствует стандарту'
-    );
+    if (event.target === this.nameInput.input) {
+      this.nameInput.validateInput(
+        nameRegex,
+        'Имя должно содержать хотя бы одну букву и не иметь специальных символов'
+      );
+      return;
+    }
+    if (event.target === this.surnameInput.input) {
+      this.surnameInput.validateInput(
+        nameRegex,
+        'Фамилия должна содержать хотя бы одну букву и не иметь специальных символов'
+      );
+      return;
+    }
+    if (event.target === this.emailInput.input) {
+      this.emailInput.validateInput(
+        emailRegex,
+        'Email не соответствует стандарту'
+      );
+    }
+  }
 
+  checkSubmitButton(): void {
     const inputs = this.element.querySelectorAll('input');
     for (let i = 0; i < inputs.length; i += 1) {
       if (inputs[i].classList.contains('invalid')) {
@@ -114,6 +129,15 @@ export class RegistrationForm extends BaseComponent<HTMLFormElement> {
       }
     }
     this.addButton.element.disabled = false;
+  }
+
+  clearForm(): void {
+    const inputs = this.element.querySelectorAll('input');
+    inputs.forEach((input) => {
+      input.classList.remove('valid');
+      input.classList.add('invalid');
+    });
+    this.addButton.element.disabled = true;
   }
 
   sendData(store: Database): void {

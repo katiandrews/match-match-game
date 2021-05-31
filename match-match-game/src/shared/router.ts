@@ -19,9 +19,15 @@ const router = (location: string) => {
       app.openSettings();
       break;
     case '#/score':
-      app.header.changeStartStopButton();
-      app.game.stopGame();
-      app.openScore();
+      if (
+        !app.header.element
+          .querySelector('.nav-list_item.score')
+          ?.classList.contains('nav-list_item__disabled')
+      ) {
+        app.header.changeStartStopButton();
+        app.game.stopGame();
+        app.openScore();
+      } else window.location.hash = '#/';
       break;
     case '#/game':
       app.startGame();

@@ -14,6 +14,8 @@ export class Game extends BaseComponent {
 
   public activeCard?: Card;
 
+  private startDelay: NodeJS.Timeout | null;
+
   private isAnimation = false;
 
   private successPairsCounter = 0;
@@ -25,6 +27,7 @@ export class Game extends BaseComponent {
     this.cardsField = new CardsField();
     this.timer = new Timer();
     this.element.appendChild(this.cardsField.element);
+    this.startDelay = null;
   }
 
   newGame(images: string[], pairQuantity: number, database: Database): void {
@@ -43,8 +46,9 @@ export class Game extends BaseComponent {
     });
 
     this.cardsField.addCards(cards);
-    setTimeout(() => {
+    this.startDelay = setTimeout(() => {
       this.timer.startTimer();
+      this.cardsField.flipCards();
     }, CARDS_SHOW_TIME);
   }
 
@@ -94,6 +98,7 @@ export class Game extends BaseComponent {
 
   stopGame(): void {
     this.timer.element.remove();
+    if (this.startDelay) clearTimeout(this.startDelay);
     this.winningModal.close();
     this.cardsField.clear();
     this.successPairsCounter = 0;

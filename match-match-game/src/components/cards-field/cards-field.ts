@@ -18,8 +18,9 @@ export class CardsField extends BaseComponent {
   addCards(cards: Card[]): void {
     this.cards = cards;
     this.cards.forEach((card) => this.element.appendChild(card.element));
-    setTimeout(() => {
-      this.cards.forEach((card) => card.flipBack());
-    }, CARDS_SHOW_TIME);
+  }
+
+  flipCards() {
+    this.cards.forEach((card) => card.flipBack());
   }
 }

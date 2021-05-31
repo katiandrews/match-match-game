@@ -3,6 +3,30 @@ import { BaseComponent } from '../../shared/baseComponent';
 import registrationImg from '../../assets/registration.jpg';
 import settingsImg from '../../assets/settings.jpg';
 import gameImg from '../../assets/game.jpg';
+interface stepItem {
+  stepNumber: string;
+  stepText: string;
+  imgSrc: string;
+  imgAlt: string;
+}
+
+const stepsContent: stepItem[] = [
+  {stepNumber: '1',
+   stepText: 'Register new player in game',
+   imgSrc: `${registrationImg}`,
+   imgAlt: 'register new player'
+  },
+  {stepNumber: '2',
+   stepText: 'Configure your game settings',
+   imgSrc: `${settingsImg}`,
+   imgAlt: 'choose settings'
+  },
+  {stepNumber: '3',
+   stepText: 'Start you new game! Remember card positions and match it before times up.',
+   imgSrc: `${gameImg}`,
+   imgAlt: 'play'
+  },
+]
 
 export class AboutGame extends BaseComponent {
   constructor() {
@@ -10,43 +34,22 @@ export class AboutGame extends BaseComponent {
     this.element.innerHTML = `
       <h1 class="section-title">How to play?</h1>
       <ul class="step-list">
-        <li class="step-list_item">
-          <div class="step-list_description">
-            <span class="step-number">1</span>
-            <p class="step-list_text">
-            Register new player in game
-            </p>
-          </div>
-          <img
-            src="${registrationImg}"
-            alt="register new player"
-            class="step-list_img"
-          />
-        </li>
-        <li class="step-list_item">
-          <div class="step-list_description">
-            <span class="step-number">2</span>
-            <p class="step-list_text">
-            Configure your game settings
-            </p>
-          </div>
-          <img
-            src="${settingsImg}"
-            alt="choose settings"
-            class="step-list_img"
-          />
-        </li>
-        <li class="step-list_item">
-          <div class="step-list_description">
-            <span class="step-number">3</span>
-            <p class="step-list_text">
-            Start you new game! Remember card positions and match it before
-            times up.
-            </p>
-          </div>
-          <img src="${gameImg}" alt="play" class="step-list_img" />
-        </li>
       </ul>
     `;
+    stepsContent.forEach((element) => {
+      const li = new BaseComponent('li', ['step-list_item']);
+      const div = new BaseComponent('div', ['step-list_description']);
+      const span = new BaseComponent('span', ['step-number']);
+      span.element.textContent = element.stepNumber;
+      const p = new BaseComponent('p', ['step-list_text']);
+      p.element.textContent = element.stepText;
+      div.element.append(span.element, p.element);
+      const img = new BaseComponent<HTMLImageElement>('img', ['step-list_img']);
+      img.element.src = element.imgSrc;
+      img.element.alt = element.imgAlt;
+      li.element.append(div.element, img.element);
+      this.element.querySelector('.step-list')?.appendChild(li.element);
+    })
   }
 }
+

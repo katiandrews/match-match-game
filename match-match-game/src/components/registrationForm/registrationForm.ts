@@ -6,89 +6,108 @@ import avatarPlaceholder from '../../assets/avatar.png';
 import { Database } from '../../shared/indexeddb';
 
 export class RegistrationForm extends BaseComponent<HTMLFormElement> {
-  private addButton: Button;
+  private addButton: Button = new Button(
+    'button',
+    ['button_primary', 'form-button'],
+    'add user',
+    'submit'
+  );
 
-  private cancelButton: Button;
+  private cancelButton: Button = new Button(
+    'button',
+    ['button_secondary', 'form-button'],
+    'cancel',
+    'reset'
+  );
 
-  nameInput: Input;
+  uploadAvatar: Input = new Input(
+    'label',
+    ['input-label', 'button_icon'],
+    '',
+    'file',
+    '',
+    false,
+    100
+  );
 
-  surnameInput: Input;
+  private avatar: BaseComponent<HTMLImageElement> = new BaseComponent('img', [
+    'form_user-avatar',
+  ]);
 
-  emailInput: Input;
+  nameInput: Input = new Input(
+    'label',
+    ['input-label'],
+    'First Name',
+    'text',
+    'First Name',
+    true,
+    30
+  );
 
-  inputContainer: BaseComponent;
+  surnameInput: Input = new Input(
+    'label',
+    ['input-label'],
+    'Last Name',
+    'text',
+    'Last Name',
+    true,
+    30
+  );
 
-  buttonsContainer: BaseComponent;
+  emailInput: Input = new Input(
+    'label',
+    ['input-label'],
+    'Email',
+    'text',
+    'Email',
+    true,
+    30
+  );
+
+  inputContainer: BaseComponent = new BaseComponent('div', ['inputs-wrapper']);
+
+  buttonsContainer: BaseComponent = new BaseComponent('div', [
+    'buttons-wrapper',
+  ]);
 
   constructor() {
     super('form', ['registration-form']);
     this.element.innerHTML = `
       <h1 class="section-title registration-form-title">How to play?</h1>
-      <img src="${avatarPlaceholder}" alt="user avatar" class="form_user-avatar">
-    `;
-    this.nameInput = new Input(
-      'label',
-      ['input-label'],
-      'First Name',
-      'text',
-      'First Name',
-      true,
-      30
-    );
-    this.surnameInput = new Input(
-      'label',
-      ['input-label'],
-      'Last Name',
-      'text',
-      'Last Name',
-      true,
-      30
-    );
-    this.emailInput = new Input(
-      'label',
-      ['input-label'],
-      'Email',
-      'text',
-      'Email',
-      true,
-      30
-    );
-    this.addButton = new Button(
-      'button',
-      ['button_primary', 'form-button'],
-      'add user',
-      'submit'
-    );
+      <div class ="avatar-container">
+      </div>`;
+    this.avatar.element.src = `${avatarPlaceholder}`;
+    this.avatar.element.alt = 'user avatar';
     this.addButton.element.disabled = true;
-    this.cancelButton = new Button(
-      'button',
-      ['button_secondary', 'form-button'],
-      'cancel',
-      'reset'
+    this.uploadAvatar.input.accept = 'image/png, image/jpeg';
+    this.inputContainer.element.append(
+      this.nameInput.element,
+      this.surnameInput.element,
+      this.emailInput.element
     );
-
-    this.inputContainer = new BaseComponent('div', ['inputs-wrapper']);
-    this.buttonsContainer = new BaseComponent('div', ['buttons-wrapper']);
-
-    this.inputContainer.element.appendChild(this.nameInput.element);
-    this.inputContainer.element.appendChild(this.surnameInput.element);
-    this.inputContainer.element.appendChild(this.emailInput.element);
-    this.buttonsContainer.element.appendChild(this.addButton.element);
-    this.buttonsContainer.element.appendChild(this.cancelButton.element);
-
-    this.element.appendChild(this.inputContainer.element);
-    this.element.appendChild(this.buttonsContainer.element);
+    this.buttonsContainer.element.append(
+      this.cancelButton.element,
+      this.addButton.element
+    );
+    this.element.append(
+      this.inputContainer.element,
+      this.buttonsContainer.element
+    );
+    this.element
+      .querySelector('.avatar-container')
+      ?.append(this.avatar.element, this.uploadAvatar.element);
 
     const inputs = this.element.querySelectorAll('input');
-
     inputs.forEach((input) => {
       input.addEventListener('input', (event) => {
         this.validateForm(event);
         this.checkSubmitButton();
       });
     });
-
     this.cancelButton.element.addEventListener('click', () => this.clearForm());
+    this.uploadAvatar.input.addEventListener('change', () => {
+      this.renderAvatar();
+    });
   }
 
   validateForm(event: Event): void {
@@ -121,7 +140,7 @@ export class RegistrationForm extends BaseComponent<HTMLFormElement> {
   }
 
   checkSubmitButton(): void {
-    const inputs = this.element.querySelectorAll('input');
+    const inputs = this.element.querySelectorAll('input[type="text"]');
     for (let i = 0; i < inputs.length; i += 1) {
       if (inputs[i].classList.contains('invalid')) {
         this.addButton.element.disabled = true;
@@ -132,12 +151,35 @@ export class RegistrationForm extends BaseComponent<HTMLFormElement> {
   }
 
   clearForm(): void {
-    const inputs = this.element.querySelectorAll('input');
+    const inputs = this.element.querySelectorAll('input[type="text"]');
     inputs.forEach((input) => {
       input.classList.remove('valid');
       input.classList.add('invalid');
     });
+    this.avatar.element.src = `${avatarPlaceholder}`;
     this.addButton.element.disabled = true;
+  }
+
+  renderAvatar(): void {
+    const { files } = this.uploadAvatar.input;
+    if (files) {
+      this.avatar.element.src = URL.createObjectURL(files[0]);
+      this.uploadAvatar.element.classList.add('uploaded');
+    }
+  }
+
+  convertAvatarBase64(): Promise<string> {
+    return new Promise((resolve) => {
+      const { files } = this.uploadAvatar.input;
+      const reader = new FileReader();
+      reader.onload = (fileLoadedEvent) => {
+        const srcData = fileLoadedEvent.target?.result;
+        if (srcData && typeof srcData === 'string') resolve(srcData);
+      };
+      if (files && files.length > 0) {
+        reader.readAsDataURL(files[0]);
+      }
+    });
   }
 
   sendData(store: Database): void {
@@ -145,10 +187,13 @@ export class RegistrationForm extends BaseComponent<HTMLFormElement> {
     const userName = this.nameInput.input.value;
     const userSurname = this.surnameInput.input.value;
     const userEmail = this.emailInput.input.value;
-    store.write(userName, userSurname, userEmail);
-  }
-
-  returnInputValues(): string {
-    return `${this.nameInput.input.value} ${this.surnameInput.input.value}`;
+    if (this.uploadAvatar.element.classList.contains('uploaded')) {
+      this.convertAvatarBase64().then((avatar) => {
+        store.write(userName, userSurname, userEmail, avatar);
+      });
+    } else {
+      const avatar = `${avatarPlaceholder}`;
+      store.write(userName, userSurname, userEmail, avatar);
+    }
   }
 }

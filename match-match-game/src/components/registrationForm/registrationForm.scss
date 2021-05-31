@@ -16,9 +16,46 @@
   grid-area: title;
 }
 
-.form_user-avatar {
+.avatar-container {
+  position: relative;
   grid-area: avatar;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & .form_user-avatar {
+    border-radius: 50%;
+    width: 190px;
+    height: 190px;
+  }
+
+  & .button_icon {
+    position: absolute;
+    width: 190px;
+    height: 190px;
+    border-radius: 50%;
+    background-color: rgba(160, 159, 255, 0.1);
+    background-image: url('../../assets/upload.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 40px 40px;
+
+    & input {
+      visibility: hidden;
+    }
+
+    &.uploaded {
+      visibility: hidden;
+    }
+  }
+
+   &:hover {
+    & .button_icon.uploaded {
+      visibility: visible;
+    }
+  }
 }
+
 
 .inputs-wrapper {
   grid-area: inputs;

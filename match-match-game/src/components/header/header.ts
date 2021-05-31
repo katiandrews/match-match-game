@@ -1,7 +1,6 @@
 import './header.scss';
 import { BaseComponent } from '../../shared/baseComponent';
 import { Button } from '../../shared/button/button';
-import avatar from '../../assets/avatar.png';
 
 interface LiContent {
   LiClass: string[];
@@ -82,10 +81,10 @@ export class Header extends BaseComponent {
     }
   }
 
-  addUser(): void {
+  addUser(source: string): void {
     this.button.element.textContent = 'Start game';
     this.element.appendChild(this.userAvatar.element);
-    this.userAvatar.element.src = avatar;
+    this.userAvatar.element.src = source;
   }
 
   changeStartStopButton(): void {

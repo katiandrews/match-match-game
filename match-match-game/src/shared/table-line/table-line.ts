@@ -9,8 +9,13 @@ export class TableLine extends BaseComponent {
 
   score: BaseComponent = new BaseComponent('p', ['score_user-score']);
 
+  userAvatar: BaseComponent<HTMLImageElement> = new BaseComponent('img', [
+    'score_user-avatar',
+  ]);
+
   constructor() {
     super('div', ['score_table-line']);
+    this.element.appendChild(this.userAvatar.element);
     this.element.appendChild(this.name.element);
     this.element.appendChild(this.email.element);
     this.element.appendChild(this.score.element);
@@ -22,6 +27,7 @@ export class TableLine extends BaseComponent {
   render(user: UsersData): HTMLElement {
     this.name.element.textContent = `${user.name} ${user.surname}`;
     this.email.element.textContent = `${user.email}`;
+    this.userAvatar.element.src = `${user.avatar}`;
     this.score.element.innerHTML = `Score: <span class="user-score_accent">${user.score}</span>`;
     return this.element;
   }

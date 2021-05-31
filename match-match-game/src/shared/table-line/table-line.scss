@@ -1,12 +1,20 @@
 .score_table-line {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr 12fr 3fr;
   grid-template-areas:
-    "name score"
-    "email score"
-    "divider divider";
+    "avatar name score"
+    "avatar email score"
+    "divider divider divider";
   color: #333333;
+}
+
+.score_user-avatar {
+  grid-area: avatar;
+  width: 35px;
+  height: 35px;
+  align-self: center;
+  border-radius: 50%;
 }
 
 .score_user-name {

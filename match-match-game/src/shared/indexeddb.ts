@@ -18,6 +18,7 @@ export class Database {
       });
       usersStore.createIndex('name', 'name');
       usersStore.createIndex('email', 'email', { unique: true });
+      usersStore.createIndex('avatar', 'avatar');
       usersStore.createIndex('score', 'score');
       this.db = database;
     };
@@ -27,7 +28,7 @@ export class Database {
     };
   }
 
-  write(name: string, surname: string, email: string): void {
+  write(name: string, surname: string, email: string, avatar: string): void {
     if (this.db) {
       const transaction = this.db.transaction('users', 'readwrite');
       const usersStore = transaction.objectStore('users');
@@ -35,6 +36,7 @@ export class Database {
         name,
         surname,
         email,
+        avatar,
         score: 0,
       });
     }
@@ -54,12 +56,28 @@ export class Database {
           name: lastElement.name,
           surname: lastElement.surname,
           email: lastElement.email,
+          avatar: lastElement.avatar,
           id: lastElement.id,
           score: userScore,
         });
       };
     }
   }
+
+  // getLastElementProperty() {
+  //   return new Promise<Array<UsersData>>((resolve) => {
+  //     if (this.db) {
+  //       const transaction = this.db.transaction('users', 'readonly');
+  //       const usersStore = transaction.objectStore('users');
+  //       const result = usersStore.index('avatar').openCursor(null, 'prev');
+
+  //       result.onsuccess = () => {
+  //         const cursor = result.result;
+  //         if(cursor) console.log(cursor.key);
+  //       }
+  //     }
+  //   });
+  // }
 
   readAll(collection: string): Promise<Array<UsersData>> {
     return new Promise((resolve, reject) => {

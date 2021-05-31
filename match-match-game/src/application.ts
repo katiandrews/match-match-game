@@ -6,6 +6,7 @@ import { ModalBg } from './shared/modalBg/modalBg';
 import { Score } from './components/score/score';
 import { Settings } from './components/settings/settings';
 import { Database } from './shared/indexeddb';
+import avatarPlaceholder from './assets/avatar.png';
 
 export class Application {
   public header: Header;
@@ -97,6 +98,16 @@ export class Application {
     this.form.registrationForm.sendData(this.usersData);
     this.form.close();
     this.header.unlockDisabledElement();
-    this.header.addUser();
+    if (
+      this.form.registrationForm.uploadAvatar.element.classList.contains(
+        'uploaded'
+      )
+    ) {
+      this.form.registrationForm.convertAvatarBase64().then((url) => {
+        this.header.addUser(url);
+      });
+    } else {
+      this.header.addUser(`${avatarPlaceholder}`);
+    }
   }
 }

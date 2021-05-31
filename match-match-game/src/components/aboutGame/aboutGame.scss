@@ -5,9 +5,8 @@
   background-color: rgb(238, 238, 238);
   margin: 33px auto;
   padding: 28px 184px 85px 36px;
-}
 
-.step-list {
+  & .step-list {
   height: 100%;
   margin: 0;
   padding: 0;
@@ -16,15 +15,16 @@
   flex-direction: column;
   gap: 18px;
 }
+}
 
 .step-list_item {
   display: flex;
   justify-content: space-between;
   height: 40%;
-}
 
-.step-list_item:nth-child(2) {
+  &:nth-child(2) {
   height: 20%;
+}
 }
 
 .step-list_description {
@@ -34,25 +34,28 @@
   height: 100%;
   padding: 16px;
   background-color: #fff;
+
+  & .step-number {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    margin-right: 16px;
+    background-color: #2196f3;
+    font-size: 24px;
+    line-height: 40px;
+    letter-spacing: 0.25px;
+    color: #ffffff;
+    border-radius: 50%;
+    text-align: center;
+  }
+  & .step-list_text {
+    margin: 0;
+    margin-top: 8px;
+    width: 75.5%;
+    color: rgba(0, 0, 0, 0.6);
+  }
 }
 
-.step-number {
-  display: inline-block;
-  width: 40px;
-  height: 40px;
-  margin-right: 16px;
-  background-color: #2196f3;
-  font-size: 24px;
-  line-height: 40px;
-  letter-spacing: 0.25px;
-  color: #ffffff;
-  border-radius: 50%;
-  text-align: center;
-}
 
-.step-list_text {
-  margin: 0;
-  margin-top: 8px;
-  width: 75.5%;
-  color: rgba(0, 0, 0, 0.6);
-}
+
+

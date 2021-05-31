@@ -67,7 +67,11 @@ export class Header extends BaseComponent {
           window.location.hash = '#/';
         }
         if ((<HTMLElement>event.currentTarget).classList.contains('score')) {
-          if (!(<HTMLElement>event.currentTarget).classList.contains('nav-list_item__disabled')) {
+          if (
+            !(<HTMLElement>event.currentTarget).classList.contains(
+              'nav-list_item__disabled'
+            )
+          ) {
             window.location.hash = '#/score';
           }
         }

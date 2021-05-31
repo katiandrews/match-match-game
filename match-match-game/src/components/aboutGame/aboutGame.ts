@@ -3,30 +3,35 @@ import { BaseComponent } from '../../shared/baseComponent';
 import registrationImg from '../../assets/registration.jpg';
 import settingsImg from '../../assets/settings.jpg';
 import gameImg from '../../assets/game.jpg';
-interface stepItem {
+
+interface StepItem {
   stepNumber: string;
   stepText: string;
   imgSrc: string;
   imgAlt: string;
 }
 
-const stepsContent: stepItem[] = [
-  {stepNumber: '1',
-   stepText: 'Register new player in game',
-   imgSrc: `${registrationImg}`,
-   imgAlt: 'register new player'
+const stepsContent: StepItem[] = [
+  {
+    stepNumber: '1',
+    stepText: 'Register new player in game',
+    imgSrc: `${registrationImg}`,
+    imgAlt: 'register new player',
   },
-  {stepNumber: '2',
-   stepText: 'Configure your game settings',
-   imgSrc: `${settingsImg}`,
-   imgAlt: 'choose settings'
+  {
+    stepNumber: '2',
+    stepText: 'Configure your game settings',
+    imgSrc: `${settingsImg}`,
+    imgAlt: 'choose settings',
   },
-  {stepNumber: '3',
-   stepText: 'Start you new game! Remember card positions and match it before times up.',
-   imgSrc: `${gameImg}`,
-   imgAlt: 'play'
+  {
+    stepNumber: '3',
+    stepText:
+      'Start you new game! Remember card positions and match it before times up.',
+    imgSrc: `${gameImg}`,
+    imgAlt: 'play',
   },
-]
+];
 
 export class AboutGame extends BaseComponent {
   constructor() {
@@ -49,7 +54,6 @@ export class AboutGame extends BaseComponent {
       img.element.alt = element.imgAlt;
       li.element.append(div.element, img.element);
       this.element.querySelector('.step-list')?.appendChild(li.element);
-    })
+    });
   }
 }
-

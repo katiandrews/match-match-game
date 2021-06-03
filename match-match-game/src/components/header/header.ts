@@ -60,7 +60,7 @@ export class Header extends BaseComponent {
     this.element.appendChild(this.button.element);
     this.userAvatar = new BaseComponent('img', ['user-avatar']);
 
-    for (let i = 0; i < this.navItems.length; i += 1) {
+    for (let i = 0; i < this.navItems.length; i++) {
       this.navItems[i].element.addEventListener('click', (event) => {
         if ((<HTMLElement>event.currentTarget).classList.contains('home')) {
           window.location.hash = '#/';

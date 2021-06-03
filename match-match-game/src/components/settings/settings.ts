@@ -27,7 +27,7 @@ export class Settings extends BaseComponent {
   );
 
   private difficultySelect: BaseComponent<HTMLSelectElement> =
-    new BaseComponent('select', ['settings_difficulty']);
+  new BaseComponent('select', ['settings_difficulty']);
 
   public difficulty = 8;
 

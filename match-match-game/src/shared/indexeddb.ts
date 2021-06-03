@@ -64,38 +64,6 @@ export class Database {
     }
   }
 
-  // getLastElementProperty() {
-  //   return new Promise<Array<UsersData>>((resolve) => {
-  //     if (this.db) {
-  //       const transaction = this.db.transaction('users', 'readonly');
-  //       const usersStore = transaction.objectStore('users');
-  //       const result = usersStore.index('avatar').openCursor(null, 'prev');
-
-  //       result.onsuccess = () => {
-  //         const cursor = result.result;
-  //         if(cursor) console.log(cursor.key);
-  //       }
-  //     }
-  //   });
-  // }
-
-  readAll(collection: string): Promise<Array<UsersData>> {
-    return new Promise((resolve, reject) => {
-      if (this.db) {
-        const transaction = this.db.transaction(collection, 'readonly');
-        const usersStore = transaction.objectStore(collection);
-        const result = usersStore.getAll();
-
-        transaction.oncomplete = () => {
-          resolve(result.result);
-        };
-        transaction.onerror = () => {
-          reject(result.error);
-        };
-      }
-    });
-  }
-
   readFilteredScore(): Promise<Array<UsersData>> {
     return new Promise<Array<UsersData>>((resolve) => {
       if (this.db) {

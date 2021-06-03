@@ -17,7 +17,7 @@ export class Score extends BaseComponent {
   addBestPlayers(store: Database): void {
     this.scoreTable.element.innerHTML = '';
     store.readFilteredScore().then((usersInfo) => {
-      for (let i = 0; i < usersInfo.length; i += 1) {
+      for (let i = 0; i < usersInfo.length; i++) {
         this.scoreTable.element.appendChild(
           new TableLine().render(usersInfo[i])
         );

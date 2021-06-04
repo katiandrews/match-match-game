@@ -17,35 +17,33 @@ export class Timer extends BaseComponent {
     const startTime = Date.now();
     this.interval = setInterval(() => {
       this.elapsedTime = Date.now() - startTime;
-      this.element.innerHTML = `${this.timeToString()}`;
+      this.element.innerHTML = `${this.formatTime()}`;
     }, 1000);
   }
 
-  timeToString(): string {
-    const diffInMin: number = this.elapsedTime / 60000;
-    const mm = Math.floor(diffInMin);
+  getMinutes(): number {
+    return Math.floor(this.elapsedTime / 60000);
+  }
 
-    const diffInSec = (diffInMin - mm) * 60;
-    const ss = Math.floor(diffInSec);
+  getSeconds(): number {
+    const elapsedTimeInSec = this.elapsedTime / 1000;
+    const elapsedMinutesInSec = this.getMinutes() * 60;
+    return Math.floor(elapsedTimeInSec - elapsedMinutesInSec);
+  }
 
-    const formattedMin = mm.toString().padStart(2, '0');
-    const formattedSec = ss.toString().padStart(2, '0');
-
+  formatTime(): string {
+    const formattedMin = this.getMinutes().toString().padStart(2, '0');
+    const formattedSec = this.getSeconds().toString().padStart(2, '0');
     return `${formattedMin}:${formattedSec}`;
   }
 
-  timeinSec(): number {
-    const minutesinSec = Number(this.timeToString().slice(0, 2)) * 60;
-    const secs = Number(this.timeToString().slice(3, 5));
-
-    return minutesinSec + secs;
+  elapsedTimeinSec(): number {
+    return Math.floor(this.elapsedTime / 1000);
   }
 
   stopTimer(): string {
-    const timePassed = this.timeToString();
+    const timePassed = `${this.getMinutes()} min, ${this.getSeconds()} sec.`;
     if (this.interval) clearInterval(this.interval);
-    return `${Number(timePassed.slice(0, 2))} min, ${Number(
-      timePassed.slice(3, 5)
-    )} sec.`;
+    return timePassed;
   }
 }

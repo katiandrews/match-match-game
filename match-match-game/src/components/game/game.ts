@@ -86,7 +86,7 @@ export class Game extends BaseComponent {
   }
 
   finish(): number {
-    const gameTime = this.timer.timeinSec();
+    const gameTime = this.timer.elapsedTimeinSec();
     this.timer.stopTimer();
     this.element.appendChild(this.winningModal.element);
     this.winningModal.alertWin();

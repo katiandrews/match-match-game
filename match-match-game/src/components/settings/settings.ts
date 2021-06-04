@@ -1,12 +1,6 @@
 import './settings.scss';
 import { BaseComponent } from '../../shared/baseComponent';
-
-interface SelectOptions {
-  value: string;
-  text: string;
-  disabled?: boolean;
-  selected?: boolean;
-}
+import { SelectOptions } from '../../models/select-options-model';
 
 const categories: SelectOptions[] = [
   { value: '', text: 'Select game cards type', disabled: true, selected: true },
@@ -14,12 +8,22 @@ const categories: SelectOptions[] = [
   { value: 'cities', text: 'Cities' },
   { value: 'pokemons', text: 'Pokemons' },
 ];
-const difficulty = [
+const difficulty: SelectOptions[]  = [
   { value: '', text: 'Select game size', disabled: true, selected: true },
   { value: '8', text: '4x4' },
   { value: '18', text: '6x6' },
 ];
 
+function addOptions(options: SelectOptions[], node: HTMLElement): void {
+  options.forEach((element) => {
+    const option = document.createElement('option');
+    option.value = element.value;
+    option.textContent = element.text;
+    if (element.disabled) option.disabled = element.disabled;
+    if (element.selected) option.selected = element.selected;
+    node.appendChild(option);
+  })
+}
 export class Settings extends BaseComponent {
   private categorySelect: BaseComponent<HTMLSelectElement> = new BaseComponent(
     'select',
@@ -41,23 +45,8 @@ export class Settings extends BaseComponent {
     const difficultyTitle = new BaseComponent('h2', ['section-title']);
     difficultyTitle.element.textContent = 'Difficulty';
 
-    difficulty.forEach((element: SelectOptions) => {
-      const option = document.createElement('option');
-      option.value = element.value;
-      option.textContent = element.text;
-      if (element.disabled) option.disabled = element.disabled;
-      if (element.selected) option.selected = element.selected;
-      this.difficultySelect.element.appendChild(option);
-    });
-
-    categories.forEach((element: SelectOptions) => {
-      const option = document.createElement('option');
-      option.value = element.value;
-      option.textContent = element.text;
-      if (element.disabled) option.disabled = element.disabled;
-      if (element.selected) option.selected = element.selected;
-      this.categorySelect.element.appendChild(option);
-    });
+    addOptions(difficulty, this.difficultySelect.element);
+    addOptions(categories, this.categorySelect.element);
 
     this.element.append(
       categoryTitle.element,
